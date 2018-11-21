@@ -16,7 +16,8 @@ import {
 import { grommet } from "grommet/themes";
 import MyDate from '../components/date';
 
-document.body.style.margin = 0;
+if(typeof document !== "undefined")
+  document.body.style.margin = 0;
 
 
 const AppBar = props => (
