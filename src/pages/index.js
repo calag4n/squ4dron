@@ -35,21 +35,18 @@ const AppBar = props => (
 class App extends Component {
   state = {
     showSidebar: false,
-    newDate: "joe"
   };
 
   onSelect = nextDate => {
     const { date } = this.state;
-    const { newDate } = this.state;
 
     this.setState({ date: nextDate !== date ? nextDate : undefined });
-    this.setState({ newDate});
   };
 
   render() {
     const { showSidebar } = this.state;
     const { date } = this.state;
-    const { newDate } = this.state;
+
 
     return (
       <Grommet theme={grommet} full>
@@ -79,13 +76,13 @@ class App extends Component {
                     locale="fr-FR"
                     reference="2018-12"
                   />
-                  {/* <MyDate/> */}
+                  <MyDate/>
                   
                   <Box
                     
                   >
                     
-                    {console.log(newDate)}
+                    
                     {/* <MyDate/> */}
                   </Box>
                 </Box>
