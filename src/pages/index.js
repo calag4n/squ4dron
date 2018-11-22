@@ -9,16 +9,11 @@ import {
   Layer,
   ResponsiveContext
 } from "grommet";
-import {
-  FormClose,
-  Notification
-} from "grommet-icons";
+import { FormClose, Notification } from "grommet-icons";
 import { grommet } from "grommet/themes";
-import MyDate from '../components/date';
+import AddedDate from "../components/AddedDate";
 
-if(typeof document !== "undefined")
-  document.body.style.margin = 0;
-
+if (typeof document !== "undefined") document.body.style.margin = 0;
 
 const AppBar = props => (
   <Box
@@ -35,19 +30,20 @@ const AppBar = props => (
 );
 class App extends Component {
   state = {
-    showSidebar: false,
+    showSidebar: false
   };
 
   onSelect = nextDate => {
     const { date } = this.state;
-
     this.setState({ date: nextDate !== date ? nextDate : undefined });
+
+    let selectedDate = new Date(nextDate).toLocaleDateString("fr-FR");
+    this.setState({ selectedDate });
   };
 
   render() {
     const { showSidebar } = this.state;
     const { date } = this.state;
-
 
     return (
       <Grommet theme={grommet} full>
@@ -66,26 +62,24 @@ class App extends Component {
                 />
               </AppBar>
               <Box direction="row" flex>
-                <Box flex align="center" justify="start"> {/* app body */}
+                <Box flex align="center" justify="start">
+                  {" "}
+                  {/* app body */}
                   <Calendar
-                    date={date?date:"2019-05-01"}
+                    date={date ? date : "2019-05-01"}
                     onSelect={this.onSelect}
                     size="medium"
                     bounds={["2018-11-01", "2019-09-30"]}
-                    margin={{vertical: "large"}}
+                    margin={{ vertical: "large" }}
                     firstDayOfWeek={1}
                     locale="fr-FR"
                     reference="2018-12"
                   />
-                  <MyDate/>
-                  
-                  <Box
-                    
-                  >
-                    
-                    
-                    {/* <MyDate/> */}
-                  </Box>
+                  {/* <MyDate/> */}
+                  <AddedDate
+                    store={this.state.selectedDate}
+                    // datePlace={this.state.selectedDate}
+                  ></AddedDate>
                 </Box>
                 {!showSidebar || size !== "small" ? (
                   <Collapsible direction="horizontal" open={showSidebar}>
