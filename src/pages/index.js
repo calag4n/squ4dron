@@ -29,9 +29,13 @@ const AppBar = props => (
   />
 );
 class App extends Component {
-  state = {
-    showSidebar: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      showSidebar: false,
+      allDates: []
+    };
+  }
 
   onSelect = nextDate => {
     const { date } = this.state;
@@ -39,12 +43,41 @@ class App extends Component {
 
     let selectedDate = new Date(nextDate).toLocaleDateString("fr-FR");
     this.setState({ selectedDate });
+
+    const allDates = this.state.allDates;
+    const current = allDates.length - 1;
+    const newDates = [selectedDate, ...allDates];
+    // allDates.concat(selectedDate)
+    this.setState({allDates: newDates});
+
+  };
+
+  validate = () => {
+    this.setState({ valid: !this.state.valid });
+    console.log(this.state.valid);
   };
 
   render() {
     const { showSidebar } = this.state;
     const { date } = this.state;
+    const allDates = this.state.allDates;
+    const current = allDates[allDates.length - 1]
 
+    const keptDates = allDates.map((date, index) => {
+      const display = date ? date : "Selectionnez une date.";
+      return (
+        <li 
+          key={index}
+          style={{width : '100%'}}
+        >
+          <AddedDate
+            store={display}
+            onClick={this.validate}
+          />
+        </li>
+      )
+    });
+    console.log(keptDates);
     return (
       <Grommet theme={grommet} full>
         <ResponsiveContext.Consumer>
@@ -52,7 +85,7 @@ class App extends Component {
             <Box fill>
               <AppBar>
                 <Heading level="3" margin="none">
-                  My App
+                  Entre-Couilles 2019
                 </Heading>
                 <Button
                   icon={<Notification />}
@@ -76,10 +109,7 @@ class App extends Component {
                     reference="2018-12"
                   />
                   {/* <MyDate/> */}
-                  <AddedDate
-                    store={this.state.selectedDate}
-                    // datePlace={this.state.selectedDate}
-                  ></AddedDate>
+                  <ul>{keptDates}</ul>
                 </Box>
                 {!showSidebar || size !== "small" ? (
                   <Collapsible direction="horizontal" open={showSidebar}>

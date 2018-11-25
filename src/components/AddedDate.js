@@ -1,26 +1,28 @@
-import React, { Component } from "react";
 import { Box, Button } from "grommet";
-import { StatusGood } from "grommet-icons";
+import { StatusGood, StatusCritical } from "grommet-icons";
+import React, { Component } from "react";
 
 class AddedDate extends Component {
-  state = {
-    valid: false
-  };
-
-  validate = ()  => {
-    this.setState({ valid: !this.state.valid });
-    console.log(this.state.valid);
-  }
-
- 
+  state = { valid: false, invalid: true };
 
   render() {
     return (
-      <Box width="40%" direction="row" justify="between" valid={this.state.valid}>
+      <Box
+        flex
+        width="40%"
+        direction="row"
+        justifyContent="between"
+        // justify="center"
+        gap="medium"
+        valid={this.state.valid}
+      >
         {this.props.store}
         {"   "}
-        <Button onClick={this.validate} >
+        <Button onClick={this.props.onClick}>
           <StatusGood color={this.state.valid ? "green" : "plain"} />
+        </Button>
+        <Button onClick={this.props.onClick}>
+          <StatusCritical color={this.state.invalid ? "red" : "plain"} />
         </Button>
       </Box>
     );
