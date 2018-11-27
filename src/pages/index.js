@@ -12,6 +12,7 @@ import {
 import { FormClose, Notification } from "grommet-icons";
 import { grommet } from "grommet/themes";
 import AddedDate from "../components/AddedDate";
+import HeadingDate from "../components/HeadingDate";
 
 if (typeof document !== "undefined") document.body.style.margin = 0;
 
@@ -33,7 +34,8 @@ class App extends Component {
     super(props);
     this.state = {
       showSidebar: false,
-      allDates: []
+      allDates: [],
+      dates: []
     };
   }
 
@@ -44,40 +46,45 @@ class App extends Component {
     let selectedDate = new Date(nextDate).toLocaleDateString("fr-FR");
     this.setState({ selectedDate });
 
-    const allDates = this.state.allDates;
-    const current = allDates.length - 1;
-    const newDates = [selectedDate, ...allDates];
-    // allDates.concat(selectedDate)
-    this.setState({allDates: newDates});
+    console.log(date);
+    console.log(this.state.dates);
 
+    console.log(this.state.allDates.indexOf(date));
   };
 
   validate = () => {
-    this.setState({ valid: !this.state.valid });
-    console.log(this.state.valid);
+    const { allDates, selectedDate, date, dates } = this.state;
+
+    const newAllDates = [selectedDate, ...allDates];
+    const newDates = [date, ...dates];
+
+    this.setState({ allDates: newAllDates, dates: newDates });
+  };
+
+  remove = index => {
+    const { allDates, dates } = this.state;
+    allDates.splice(index, 1);
+    dates.splice(index, 1);
+    this.setState({allDates: allDates, dates: dates});
   };
 
   render() {
-    const { showSidebar } = this.state;
-    const { date } = this.state;
-    const allDates = this.state.allDates;
-    const current = allDates[allDates.length - 1]
+    const { showSidebar, date, dates, allDates, selectedDate } = this.state;
 
     const keptDates = allDates.map((date, index) => {
       const display = date ? date : "Selectionnez une date.";
       return (
-        <li 
-          key={index}
-          style={{width : '100%'}}
-        >
+        <li key={index} style={{ width: "100%" }}>
           <AddedDate
             store={display}
-            onClick={this.validate}
+            onClick={() => this.remove(index)}
           />
         </li>
-      )
+      );
     });
-    console.log(keptDates);
+
+    const dateExist = (dates.indexOf(date) !== -1);
+
     return (
       <Grommet theme={grommet} full>
         <ResponsiveContext.Consumer>
@@ -97,18 +104,32 @@ class App extends Component {
               <Box direction="row" flex>
                 <Box flex align="center" justify="start">
                   {" "}
-                  {/* app body */}
+                  <Box
+                    margin="small"
+                    width="100%"
+                    justifyContent="between"
+                    gap="small"
+                  >
+                    {!selectedDate ? (
+                      <h2>Selectionnez une date.</h2>
+                    ) : (
+                      <HeadingDate
+                        store={selectedDate}
+                        isDateExist={dateExist}
+                        onClick={this.validate}
+                      />
+                    )}
+                  </Box>
                   <Calendar
                     date={date ? date : "2019-05-01"}
+                    dates={this.state.dates}
                     onSelect={this.onSelect}
                     size="medium"
                     bounds={["2018-11-01", "2019-09-30"]}
                     margin={{ vertical: "large" }}
                     firstDayOfWeek={1}
                     locale="fr-FR"
-                    reference="2018-12"
                   />
-                  {/* <MyDate/> */}
                   <ul>{keptDates}</ul>
                 </Box>
                 {!showSidebar || size !== "small" ? (
@@ -156,4 +177,5 @@ class App extends Component {
     );
   }
 }
+
 export default App;
