@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 import {
   Box,
   Button,
@@ -8,82 +8,57 @@ import {
   Heading,
   Layer,
   ResponsiveContext
-} from "grommet";
-import { FormClose, Notification } from "grommet-icons";
-import { grommet } from "grommet/themes";
-import AddedDate from "../components/AddedDate";
-import HeadingDate from "../components/HeadingDate";
+} from 'grommet'
+import { FormClose, Notification } from 'grommet-icons'
+import { grommet } from 'grommet/themes'
+// import AddedDate from '../components/AddedDate'
 
-if (typeof document !== "undefined") document.body.style.margin = 0;
+
+if (typeof document !== 'undefined') document.body.style.margin = 0
 
 const AppBar = props => (
   <Box
-    tag="header"
-    direction="row"
-    align="center"
-    justify="between"
-    background="brand"
-    pad={{ left: "medium", right: "small", vertical: "small" }}
-    elevation="medium"
-    style={{ zIndex: "100" }}
+    tag='header'
+    direction='row'
+    align='center'
+    justify='between'
+    background='brand'
+    pad={{ left: 'medium', right: 'small', vertical: 'small' }}
+    elevation='medium'
+    style={{ zIndex: '100' }}
     {...props}
   />
-);
+)
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showSidebar: false,
-      allDates: [],
-      dates: []
-    };
+  state = {
+    showSidebar: false,
+    dates: []
   }
 
-  onSelect = nextDate => {
-    const { date } = this.state;
-    this.setState({ date: nextDate !== date ? nextDate : undefined });
+  onSelect = newDate => {
+    const { dates } = this.state
+    let isAlreadyIn = false
+    let toSplice
 
-    let selectedDate = new Date(nextDate).toLocaleDateString("fr-FR");
-    this.setState({ selectedDate });
-
-    console.log(date);
-    console.log(this.state.dates);
-
-    console.log(this.state.allDates.indexOf(date));
-  };
-
-  validate = () => {
-    const { allDates, selectedDate, date, dates } = this.state;
-
-    const newAllDates = [selectedDate, ...allDates];
-    const newDates = [date, ...dates];
-
-    this.setState({ allDates: newAllDates, dates: newDates });
-  };
-
-  remove = index => {
-    const { allDates, dates } = this.state;
-    allDates.splice(index, 1);
-    dates.splice(index, 1);
-    this.setState({allDates: allDates, dates: dates});
-  };
+    dates.forEach((thatDate, i) => {
+      if (thatDate === newDate) {
+        isAlreadyIn = true
+        toSplice = i
+      }
+    })
+    if (isAlreadyIn) {
+      dates.splice(toSplice, 1)
+    } else {
+      dates.push(newDate)
+    }
+    console.log(dates)
+    this.setState({ dates})
+  }
 
   render() {
-    const { showSidebar, date, dates, allDates, selectedDate } = this.state;
+    const { showSidebar, dates } = this.state
 
-    const keptDates = allDates.map((date, index) => {
-      const display = date ? date : "Selectionnez une date.";
-      return (
-        <li key={index} style={{ width: "100%" }}>
-          <AddedDate
-            store={display}
-            onClick={() => this.remove(index)}
-          />
-        </li>
-      );
-    });
 
-    const dateExist = (dates.indexOf(date) !== -1);
 
     return (
       <Grommet theme={grommet} full>
@@ -91,7 +66,7 @@ class App extends Component {
           {size => (
             <Box fill>
               <AppBar>
-                <Heading level="3" margin="none">
+                <Heading level='3' margin='none'>
                   Entre-Couilles 2019
                 </Heading>
                 <Button
@@ -101,58 +76,53 @@ class App extends Component {
                   }
                 />
               </AppBar>
-              <Box direction="row" flex>
-                <Box flex align="center" justify="start">
-                  {" "}
+              <Box direction='row' flex>
+                <Box flex align='center' justify='start'>
+                  {' '}
                   <Box
-                    margin="small"
-                    width="100%"
-                    justifyContent="between"
-                    gap="small"
+                    margin='small'
+                    width='100%'
+                    justifyContent='between'
+                    gap='small'
                   >
-                    {!selectedDate ? (
-                      <h2>Selectionnez une date.</h2>
-                    ) : (
-                      <HeadingDate
-                        store={selectedDate}
-                        isDateExist={dateExist}
-                        onClick={this.validate}
-                      />
-                    )}
+                    
+                      <h2>Selectionnez des dates.</h2>
+                    
                   </Box>
                   <Calendar
-                    date={date ? date : "2019-05-01"}
-                    dates={this.state.dates}
+                    // date={date.length===0?'2019-05-01':date}
+                    dates={dates}
                     onSelect={this.onSelect}
-                    size="medium"
-                    bounds={["2018-11-01", "2019-09-30"]}
-                    margin={{ vertical: "large" }}
+                    size='medium'
+                    bounds={['2018-11-01', '2019-09-30']}
+                    margin={{ vertical: 'large' }}
                     firstDayOfWeek={1}
-                    locale="fr-FR"
+                    locale='fr-FR'
+                    daysOfWeek
                   />
-                  <ul>{keptDates}</ul>
+                  {/* <ul>{keptDates}</ul> */}
                 </Box>
-                {!showSidebar || size !== "small" ? (
-                  <Collapsible direction="horizontal" open={showSidebar}>
+                {!showSidebar || size !== 'small' ? (
+                  <Collapsible direction='horizontal' open={showSidebar}>
                     <Box
                       flex
-                      width="medium"
-                      background="light-2"
-                      elevation="small"
-                      align="center"
-                      justify="center"
+                      width='medium'
+                      background='light-2'
+                      elevation='small'
+                      align='center'
+                      justify='center'
                     >
-                      sidebar
+                      {/* <Sidebar /> */}
                     </Box>
                   </Collapsible>
                 ) : (
                   <Layer>
                     <Box
-                      background="light-2"
-                      tag="header"
-                      justify="end"
-                      align="center"
-                      direction="row"
+                      background='light-2'
+                      tag='header'
+                      justify='end'
+                      align='center'
+                      direction='row'
                     >
                       <Button
                         icon={<FormClose />}
@@ -161,9 +131,9 @@ class App extends Component {
                     </Box>
                     <Box
                       fill
-                      background="light-2"
-                      align="center"
-                      justify="center"
+                      background='light-2'
+                      align='center'
+                      justify='center'
                     >
                       sidebar Joe
                     </Box>
@@ -174,8 +144,8 @@ class App extends Component {
           )}
         </ResponsiveContext.Consumer>
       </Grommet>
-    );
+    )
   }
 }
 
-export default App;
+export default App
