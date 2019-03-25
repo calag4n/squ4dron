@@ -10,8 +10,10 @@
     "flow": "flow"
   },
   "dependencies": {
+    "core-js": "^2.6.5",
     "firebase": "^5.9.1",
-    "gatsby": "^2.2.8",
+    "gatsby": "^2.2.11",
+    "gatsby-plugin-manifest": "^2.0.24",
     "grommet": "^2.6.5",
     "grommet-icons": "^3.2.1",
     "polished": "^2.3.3",
