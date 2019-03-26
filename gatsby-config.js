@@ -13,5 +13,6 @@ module.exports = {
         include_favicon: true, // Include favicon
       },
     },
+    `gatsby-plugin-offline`
   ],
 }

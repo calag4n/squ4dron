@@ -56,11 +56,7 @@ class App extends Component {
   }
 
   render() {
-<<<<<<< HEAD
-    console.log(this.props)
-=======
     console.log(this.props);
->>>>>>> gatsbyModeRoute
     const { showSidebar, dates, pseudo } = this.state
 
     return (
