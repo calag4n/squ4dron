@@ -56,6 +56,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.props)
     const { showSidebar, dates, pseudo } = this.state
 
     return (
