@@ -9,8 +9,9 @@ import {
   Layer,
   ResponsiveContext
 } from 'grommet'
-import { FormClose, Notification } from 'grommet-icons'
+import { FormClose, Sign } from 'grommet-icons'
 import { grommet } from 'grommet/themes'
+import Sidebar from '../components/Sidebar'
 // import AddedDate from '../components/AddedDate'
 
 if (typeof document !== 'undefined') document.body.style.margin = 0
@@ -30,7 +31,7 @@ const AppBar = props => (
 )
 class App extends Component {
   state = {
-    showSidebar: false,
+    showSidebar: true,
     dates: [],
     pseudo: this.props.pseudo
   }
@@ -56,7 +57,7 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.props);
+    console.log(this.props)
     const { showSidebar, dates, pseudo } = this.state
 
     return (
@@ -69,12 +70,13 @@ class App extends Component {
                   Entre-Couilles 2019
                 </Heading>
                 <Button
-                  icon={<Notification />}
+                  icon={<Sign color='white' />}
                   onClick={() =>
                     this.setState({ showSidebar: !this.state.showSidebar })
                   }
                 />
               </AppBar>
+
               <Box direction='row' flex>
                 <Box flex align='center' justify='start'>
                   {' '}
@@ -108,7 +110,7 @@ class App extends Component {
                       align='center'
                       justify='center'
                     >
-                      {/* <Sidebar /> */}
+                      <Sidebar />
                     </Box>
                   </Collapsible>
                 ) : (
@@ -131,7 +133,7 @@ class App extends Component {
                       align='center'
                       justify='center'
                     >
-                      sidebar Joe
+                      <Sidebar />
                     </Box>
                   </Layer>
                 )}
