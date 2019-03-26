@@ -32,7 +32,7 @@ class App extends Component {
   state = {
     showSidebar: false,
     dates: [],
-    pseudo: this.props.match.params.pseudo
+    pseudo: this.props.pseudo
   }
 
   onSelect = newDate => {
@@ -56,6 +56,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.props);
     const { showSidebar, dates, pseudo } = this.state
 
     return (
