@@ -10,10 +10,12 @@ class Connexion extends Component {
   handleChange = event => {
     const pseudo = event.target.value
     this.setState({ pseudo })
+
   }
 
   handleSubmit = event => {
     event.preventDefault()
+    this.props.setPseudo(this.state.pseudo)
     this.setState({ goToApp: true })
   }
 
