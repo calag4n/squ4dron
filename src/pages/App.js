@@ -34,20 +34,27 @@ class App extends Component {
   state = {
     showSidebar: true,
     dates: [],
-    // inObjectDate : {},
+    date2: [],
+    inObjectDate: {},
     pseudo: ''
   }
 
   componentDidMount() {
+    const { dates2, inObjectDate } = this.state
     this.setState({ pseudo: this.props.location.state.pseudo })
 
-    // this.ref = base.syncState(`/${this.state.pseudo}/dates`, {
-    //   context: this,
-    //   state: 'dates'
-    // })
+    this.ref = base.syncState(`/${this.state.pseudo}/dates`, {
+      context: this,
+      state: 'inObjectDate'
+    })
+    console.log(inObjectDate)
+    //  inObjectDate.forEach(date=>{
+    //    dates2.push(date)
+    //  })
+    //  console.log(dates2)
   }
 
-  onSelect = async newDate => {
+  onSelect =  newDate => {
     const { dates } = this.state
     let isAlreadyIn = false
     let toSplice
@@ -64,22 +71,16 @@ class App extends Component {
       dates.push(newDate)
     }
     console.log(dates)
+    console.log(this.state.inObjectDate)
     this.setState({ dates })
 
-    const box = await base.fetch(this.state.pseudo, { context: this })
+    // const box = await base.fetch(this.state.pseudo, { context: this })
 
-    if (box.dates) {
-      this.ref = base.syncState(`/${this.state.pseudo}/dates`, {
-        context: this,
-        state: 'dates'
-      })
-    } else {
-      await base.post(`/${this.state.pseudo}/dates`, { data: dates })
-    }
+    // await base.post(`/${this.state.pseudo}/dates`, { data: dates })
   }
 
   render() {
-    console.log(this.props)
+ 
 
     const { showSidebar, dates, pseudo } = this.state
 
