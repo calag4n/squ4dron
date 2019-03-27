@@ -14,8 +14,8 @@ class Connexion extends Component {
 
   handleSubmit = event => {
     event.preventDefault()
-    navigate(`/App/`,
-      state:{pseudo})
+    navigate(`/App/`,{
+      state:{pseudo}})
   }
 
   render() {
