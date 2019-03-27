@@ -33,7 +33,7 @@ class App extends Component {
   state = {
     showSidebar: true,
     dates: [],
-    pseudo: this.props.pseudo
+    pseudo: this.props.location.state.pseudo
   }
 
   onSelect = newDate => {
