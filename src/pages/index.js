@@ -1,31 +1,42 @@
 import React, { Component } from 'react'
-import App from './App'
+
 import { Grommet, Box, Form, FormField, Button } from 'grommet'
-import {navigate} from 'gatsby'
+import { navigate } from 'gatsby'
 import { grommet } from 'grommet/themes'
 
-class Connexion extends Component {
-  state = { pseudo: '', goToApp: false }
+// Firebase
+import base from '../base'
 
-  handleChange = event => {
-    const pseudo = event.target.value
-    this.setState({ pseudo })
+class Connexion extends Component {
+  state = { pseudo: '', mdp: '' }
+
+  componentDidUpdate(){
+    console.log(this.state.mdp);
   }
 
-  handleSubmit = event => {
+  handleChange = event => {
+    const {name, value}= event.target
+    this.setState({ [name]: value })
+  }
+
+  handleSubmit = async event => {
     event.preventDefault()
-    navigate(`/App/`,
-    {
-      state: {pseudo: this.state.pseudo}
-    })
+    const {name, value}= event.target
+    this.setState({ [name]: value })
+    const box = await base.fetch(this.state.pseudo, { context: this })
+    console.log(box);
+    
+    if (box.pwd === this.state.mdp) {
+      navigate(`/App/`,
+      {
+        state: {pseudo: this.state.pseudo}
+      })
+    }
   }
 
   render() {
-    const { pseudo, goToApp } = this.state
+    const { pseudo, mdp } = this.state
 
-    // if (goToApp) {
-    //   return <App to={`/pseudo/${pseudo}`} pseudo={pseudo}/>
-    // }
     return (
       <Grommet theme={grommet} full>
         <Box fill align='center' justify='center'>
@@ -34,11 +45,17 @@ class Connexion extends Component {
               <FormField
                 value={pseudo}
                 onChange={this.handleChange}
+                name='pseudo'
                 type='text'
                 placeholder='Pseudo'
-                required
               />
-              <FormField type='password' placeholder='Mot de passe' />
+              <FormField
+                value={mdp}
+                onChange={this.handleChange}
+                name='mdp'
+                type='password'
+                placeholder='Mot de passe'
+              />
               <Box direction='row' justify='center' margin={{ top: 'medium' }}>
                 <Button type='submit' label='GO' />
               </Box>

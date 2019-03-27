@@ -13,6 +13,7 @@ import { FormClose, Sign } from 'grommet-icons'
 import { grommet } from 'grommet/themes'
 import Sidebar from '../components/Sidebar'
 // import AddedDate from '../components/AddedDate'
+import base from '../base'
 
 if (typeof document !== 'undefined') document.body.style.margin = 0
 
@@ -33,14 +34,20 @@ class App extends Component {
   state = {
     showSidebar: true,
     dates: [],
+    // inObjectDate : {},
     pseudo: ''
   }
 
-  componentDidMount(){
-    this.setState({pseudo: this.props.location.state.pseudo})
+  componentDidMount() {
+    this.setState({ pseudo: this.props.location.state.pseudo })
+
+    // this.ref = base.syncState(`/${this.state.pseudo}/dates`, {
+    //   context: this,
+    //   state: 'dates'
+    // })
   }
 
-  onSelect = newDate => {
+  onSelect = async newDate => {
     const { dates } = this.state
     let isAlreadyIn = false
     let toSplice
@@ -58,6 +65,17 @@ class App extends Component {
     }
     console.log(dates)
     this.setState({ dates })
+
+    const box = await base.fetch(this.state.pseudo, { context: this })
+
+    if (box.dates) {
+      this.ref = base.syncState(`/${this.state.pseudo}/dates`, {
+        context: this,
+        state: 'dates'
+      })
+    } else {
+      await base.post(`/${this.state.pseudo}/dates`, { data: dates })
+    }
   }
 
   render() {
