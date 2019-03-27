@@ -16,7 +16,7 @@ class Connexion extends Component {
     event.preventDefault()
     navigate(`/App/`,
     {
-      state: {{pseudo: this.state.pseudo}}
+      state: {pseudo: this.state.pseudo}
     })
   }
 
