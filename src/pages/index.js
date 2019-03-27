@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import App from './App'
 import { Grommet, Box, Form, FormField, Button } from 'grommet'
-
+import {navigate} from 'gatsby'
 import { grommet } from 'grommet/themes'
 
 class Connexion extends Component {
@@ -14,15 +14,15 @@ class Connexion extends Component {
 
   handleSubmit = event => {
     event.preventDefault()
-    this.setState({ goToApp: true })
+    navigate(`/App/${pseudo}`)
   }
 
   render() {
     const { pseudo, goToApp } = this.state
 
-    if (goToApp) {
-      return <App to={`/pseudo/${pseudo}`} pseudo={pseudo}/>
-    }
+    // if (goToApp) {
+    //   return <App to={`/pseudo/${pseudo}`} pseudo={pseudo}/>
+    // }
     return (
       <Grommet theme={grommet} full>
         <Box fill align='center' justify='center'>
