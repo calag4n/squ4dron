@@ -36,23 +36,23 @@ class App extends Component {
     dates: [],
     syncDates: {},
     box: null,
-    pseudo: this.props.location.state.pseudo
+    pseudo: ''
   }
 
-   async componentDidMount() {
-
+  async componentDidMount() {
+    await this.setState({ pseudo: this.props.location.state.pseudo })
 
     const box = await base.fetch(this.state.pseudo, { context: this })
 
-    await this.setState({box : box.dates })
-    await this.setState({dates: Object.values(this.state.box) })
+    await this.setState({ box: box.dates })
 
+    if (this.state.box !== undefined) {
+      await this.setState({ dates: Object.values(this.state.box) })
+    }
     // this.ref =  base.syncState(`/${this.state.pseudo}/dates`, {
     //   context: this,
     //   state: 'syncDates'
     // })
-
-    
 
     console.log(this.state.box)
     console.log(this.state.dates)
@@ -62,7 +62,6 @@ class App extends Component {
 
     // console.log(box)
     // this.setState({inObjectDate: box.dates})
-
 
     //  inObjectDate.forEach(date=>{
     //    dates2.push(date)
@@ -75,16 +74,18 @@ class App extends Component {
   }
 
   async componentDidUpdate() {
-    await base.post(`${this.state.pseudo}/dates`, {data: this.state.box})
+    if (this.state.box !== undefined) {
+      await base.post(`${this.state.pseudo}/dates`, { data: this.state.box })
+    }
   }
 
   resetDb = async () => {
-    await base.post(`${this.state.pseudo}/dates`, {data: null})
+    await base.post(`${this.state.pseudo}/dates`, { data: null })
   }
 
   onSelect = newDate => {
     const { dates } = this.state
-    let box 
+    let box
     let isAlreadyIn = false
     let toSplice
 
@@ -92,8 +93,7 @@ class App extends Component {
       if (thatDate === newDate) {
         isAlreadyIn = true
         toSplice = i
-      }else{
-     
+      } else {
       }
     })
     if (isAlreadyIn) {
@@ -101,23 +101,18 @@ class App extends Component {
     } else {
       dates.push(newDate)
     }
- 
+
     this.resetDb()
 
     box = [...dates]
 
-
-  
     // syncDates = { ...dates}
 
     console.log(box)
-    
-    
-    this.setState({ dates, box})
 
-    
-    
-        console.log(this.state.syncDates)
+    this.setState({ dates, box })
+
+    console.log(this.state.syncDates)
 
     // const box = await base.fetch(this.state.pseudo, { context: this })
 
