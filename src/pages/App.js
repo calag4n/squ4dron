@@ -13,7 +13,7 @@ import { FormClose, Sign } from 'grommet-icons'
 import { grommet } from 'grommet/themes'
 import Sidebar from '../components/Sidebar'
 // import AddedDate from '../components/AddedDate'
-import base from '../base'
+import base from '../../base'
 
 if (typeof document !== 'undefined') document.body.style.margin = 0
 
@@ -34,28 +34,57 @@ class App extends Component {
   state = {
     showSidebar: true,
     dates: [],
-    date2: [],
-    inObjectDate: {},
-    pseudo: ''
+    syncDates: {},
+    box: null,
+    pseudo: this.props.location.state.pseudo
   }
 
-  componentDidMount() {
-    const { dates2, inObjectDate } = this.state
-    this.setState({ pseudo: this.props.location.state.pseudo })
+   async componentDidMount() {
 
-    this.ref = base.syncState(`/${this.state.pseudo}/dates`, {
-      context: this,
-      state: 'inObjectDate'
-    })
-    console.log(inObjectDate)
+
+    const box = await base.fetch(this.state.pseudo, { context: this })
+
+    await this.setState({box : box.dates })
+    await this.setState({dates: Object.values(this.state.box) })
+
+    // this.ref =  base.syncState(`/${this.state.pseudo}/dates`, {
+    //   context: this,
+    //   state: 'syncDates'
+    // })
+
+    
+
+    console.log(this.state.box)
+    console.log(this.state.dates)
+    // const { dates2, inObjectDate, box } = this.state
+
+    // const box =  base.fetch(this.state.pseudo, { context: this })
+
+    // console.log(box)
+    // this.setState({inObjectDate: box.dates})
+
+
     //  inObjectDate.forEach(date=>{
     //    dates2.push(date)
     //  })
     //  console.log(dates2)
   }
 
-  onSelect =  newDate => {
+  componentWillUnmount() {
+    base.removeBinding(this.ref)
+  }
+
+  async componentDidUpdate() {
+    await base.post(`${this.state.pseudo}/dates`, {data: this.state.box})
+  }
+
+  resetDb = async () => {
+    await base.post(`${this.state.pseudo}/dates`, {data: null})
+  }
+
+  onSelect = newDate => {
     const { dates } = this.state
+    let box 
     let isAlreadyIn = false
     let toSplice
 
@@ -63,6 +92,8 @@ class App extends Component {
       if (thatDate === newDate) {
         isAlreadyIn = true
         toSplice = i
+      }else{
+     
       }
     })
     if (isAlreadyIn) {
@@ -70,9 +101,23 @@ class App extends Component {
     } else {
       dates.push(newDate)
     }
-    console.log(dates)
-    console.log(this.state.inObjectDate)
-    this.setState({ dates })
+ 
+    this.resetDb()
+
+    box = [...dates]
+
+
+  
+    // syncDates = { ...dates}
+
+    console.log(box)
+    
+    
+    this.setState({ dates, box})
+
+    
+    
+        console.log(this.state.syncDates)
 
     // const box = await base.fetch(this.state.pseudo, { context: this })
 
@@ -80,8 +125,6 @@ class App extends Component {
   }
 
   render() {
- 
-
     const { showSidebar, dates, pseudo } = this.state
 
     return (
@@ -121,6 +164,7 @@ class App extends Component {
                     firstDayOfWeek={1}
                     locale='fr-FR'
                     daysOfWeek
+                    reference='2019-05-01'
                   />
                   {/* <ul>{keptDates}</ul> */}
                 </Box>

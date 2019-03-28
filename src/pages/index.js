@@ -5,7 +5,7 @@ import { navigate } from 'gatsby'
 import { grommet } from 'grommet/themes'
 
 // Firebase
-import base from '../base'
+import base from '../../base'
 
 class Connexion extends Component {
   state = { pseudo: '', mdp: '' }
