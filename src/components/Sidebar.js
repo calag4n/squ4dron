@@ -1,49 +1,38 @@
 import React, { Component } from 'react'
 import { Box, Button } from 'grommet'
 import { Plan, Schedules, ChatOption, Basket } from 'grommet-icons'
-import { navigate } from 'gatsby'
 
 class Sidebar extends Component {
-
-
   render() {
     return (
       <Box>
         <Button
-          name='MyCalendar'
-          icon={<Plan size='large'/>}
+          icon={<Plan size='large' />}
           label='Mes dates'
           margin='large'
           hoverIndicator
-          onClick={this.props.handleClick}
-          
+          onClick={(e) => this.props.handleClick('MyCalendar',e)}
         />
         <Button
-          name='GlobalCalendar'
-          icon={<Schedules size='large'/>}
+          icon={<Schedules size='large' />}
           label='Calendrier global'
           margin='large'
           hoverIndicator
-          onClick={this.props.handleClick}
-          
+          onClick={(e) => this.props.handleClick('GlobalCalendar',e)}
         />
         <Button
-          name='Chat'
-          icon={<ChatOption size='large'/>}
+          icon={<ChatOption size='large' />}
           label='Messages'
           margin='large'
           hoverIndicator
-          onClick={this.props.handleClick}
-          
+          onClick={(e) => this.props.handleClick('Chat',e)}
         />
         <Button
-          name='ToDoList'
-          icon={<Basket size='large'/>}
+          icon={<Basket size='large' />}
           label='Liste des courses'
           margin='large'
           hoverIndicator
-          onClick={this.props.handleClick}
-          
+          onClick={(e) => this.props.handleClick('ToDoList',e)}
         />
       </Box>
     )

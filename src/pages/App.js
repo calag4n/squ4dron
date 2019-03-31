@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import {
   Box,
   Button,
-  Calendar,
   Collapsible,
   Grommet,
   Heading,
@@ -14,6 +13,7 @@ import { grommet } from 'grommet/themes'
 import Sidebar from '../components/Sidebar'
 import base from '../../base'
 import MyCalendar from '../components/MyCalendar'
+import Chat from '../components/Chat'
 
 if (typeof document !== 'undefined') document.body.style.margin = 0
 
@@ -36,7 +36,7 @@ class App extends Component {
     dates: [],
     box: [],
     pseudo: '',
-    Section: 'App'
+    section: 'MyCalendar'
   }
 
   async componentDidMount() {
@@ -77,13 +77,31 @@ class App extends Component {
     this.updateDates()
   }
 
-  handleClick = event => {
-    const Section = event.target.name
-    this.setState({ Section })
+  handleClick = (section, event) => {
+    event.stopPropagation()
+    console.log(event.target)
+    console.log(section)
+    this.setState({ section })
+  }
+
+  Section = ()=>{
+    switch (this.state.section) {
+      case 'Chat':
+        return <Chat/>
+      
+      default:
+        return (
+          <MyCalendar
+          dates={this.state.dates}
+          pseudo={this.state.pseudo}
+          onSelect={this.onSelect}
+          />
+        )
+    }
   }
 
   render() {
-    const { showSidebar, dates, pseudo, Section } = this.state
+    const { showSidebar} = this.state
 
     return (
       <Grommet theme={grommet} full>
@@ -102,11 +120,7 @@ class App extends Component {
                 />
               </AppBar>
               <Box direction='row' flex>
-                <MyCalendar
-                  dates={dates}
-                  pseudo={pseudo}
-                  onSelect={this.onSelect}
-                />
+                {this.Section()}
 
                 {!showSidebar || size !== 'small' ? (
                   <Collapsible direction='horizontal' open={showSidebar}>
@@ -118,7 +132,7 @@ class App extends Component {
                       align='center'
                       justify='center'
                     >
-                      <Sidebar hadleClick={this.handleClick} />
+                      <Sidebar handleClick={this.handleClick} />
                     </Box>
                   </Collapsible>
                 ) : (

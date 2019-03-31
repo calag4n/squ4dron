@@ -13,7 +13,7 @@ class MyCalendar extends Component {
           dates={this.props.dates}
           onSelect={this.props.onSelect}
           size='medium'
-          bounds={['2018-11-01', '2019-09-30']}
+          bounds={['2019-01-01', '2020-09-30']}
           margin={{ vertical: 'large' }}
           firstDayOfWeek={1}
           locale='fr-FR'
