@@ -64,10 +64,11 @@ class App extends Component {
     await base.post(`${this.state.pseudo}/dates`, { data: null })
   }
 
-  onSelect = async newDate => {
+  onSelect = async addDate => {
     const { dates } = this.state
     let box
-
+    const newDate = addDate.slice(0,10)
+    console.log(newDate)
     let isIndex = dates.indexOf(newDate)
 
     if (isIndex !== -1) {
@@ -135,7 +136,7 @@ class App extends Component {
                     firstDayOfWeek={1}
                     locale='fr-FR'
                     daysOfWeek
-                    reference='2019-05-01'
+                    // reference='2019-05-01'
                   />
                   {/* <ul>{keptDates}</ul> */}
                 </Box>
