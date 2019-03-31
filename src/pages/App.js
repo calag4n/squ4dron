@@ -35,7 +35,7 @@ class App extends Component {
     showSidebar: true,
     dates: [],
     syncDates: {},
-    box: null,
+    box: [],
     pseudo: ''
   }
 
@@ -43,37 +43,18 @@ class App extends Component {
     await this.setState({ pseudo: this.props.location.state.pseudo })
 
     const box = await base.fetch(this.state.pseudo, { context: this })
+    console.log(box)
 
-    await this.setState({ box: box.dates })
-
-    if (this.state.box !== undefined) {
-      await this.setState({ dates: Object.values(this.state.box) })
+    if (box.dates) {
+      await this.setState({ box: box.dates })
+      await this.setState({ dates: box.dates })
     }
-    // this.ref =  base.syncState(`/${this.state.pseudo}/dates`, {
-    //   context: this,
-    //   state: 'syncDates'
-    // })
 
     console.log(this.state.box)
     console.log(this.state.dates)
-    // const { dates2, inObjectDate, box } = this.state
-
-    // const box =  base.fetch(this.state.pseudo, { context: this })
-
-    // console.log(box)
-    // this.setState({inObjectDate: box.dates})
-
-    //  inObjectDate.forEach(date=>{
-    //    dates2.push(date)
-    //  })
-    //  console.log(dates2)
   }
 
-  componentWillUnmount() {
-    base.removeBinding(this.ref)
-  }
-
-  async componentDidUpdate() {
+  async updateDates() {
     if (this.state.box !== undefined) {
       await base.post(`${this.state.pseudo}/dates`, { data: this.state.box })
     }
@@ -83,40 +64,35 @@ class App extends Component {
     await base.post(`${this.state.pseudo}/dates`, { data: null })
   }
 
-  onSelect = newDate => {
+  onSelect = async newDate => {
     const { dates } = this.state
     let box
-    let isAlreadyIn = false
-    let toSplice
 
-    dates.forEach((thatDate, i) => {
-      if (thatDate === newDate) {
-        isAlreadyIn = true
-        toSplice = i
-      } else {
-      }
-    })
-    if (isAlreadyIn) {
-      dates.splice(toSplice, 1)
+    let isIndex = dates.indexOf(newDate)
+
+    if (isIndex !== -1) {
+      dates.splice(isIndex, 1)
     } else {
       dates.push(newDate)
     }
 
-    this.resetDb()
+    console.log('before cloning')
+    console.log(box)
+    console.log(dates)
+    // this.resetDb()
 
     box = [...dates]
-
-    // syncDates = { ...dates}
-
+    console.log('after cloning')
     console.log(box)
+    console.log(dates)
 
-    this.setState({ dates, box })
+    await this.setState({ dates })
+    await this.setState({ box })
+    console.log('state')
+    console.log(this.state.box)
+    console.log(this.state.dates)
 
-    console.log(this.state.syncDates)
-
-    // const box = await base.fetch(this.state.pseudo, { context: this })
-
-    // await base.post(`/${this.state.pseudo}/dates`, { data: dates })
+    this.updateDates()
   }
 
   render() {
