@@ -10,10 +10,6 @@ import base from '../../base'
 class Connexion extends Component {
   state = { pseudo: '', mdp: '' }
 
-  componentDidUpdate(){
-    console.log(this.state.mdp);
-  }
-
   handleChange = event => {
     const {name, value}= event.target
     this.setState({ [name]: value })
@@ -24,7 +20,6 @@ class Connexion extends Component {
     const {name, value}= event.target
     this.setState({ [name]: value })
     const box = await base.fetch(this.state.pseudo, { context: this })
-    console.log(box);
     
     if (box.pwd === this.state.mdp) {
       navigate(`/App/`,

@@ -12,7 +12,6 @@ import {
 import { FormClose, Sign } from 'grommet-icons'
 import { grommet } from 'grommet/themes'
 import Sidebar from '../components/Sidebar'
-// import AddedDate from '../components/AddedDate'
 import base from '../../base'
 
 if (typeof document !== 'undefined') document.body.style.margin = 0
@@ -67,8 +66,7 @@ class App extends Component {
   onSelect = async addDate => {
     const { dates } = this.state
     let box
-    const newDate = addDate.slice(0,10)
-    console.log(newDate)
+    const newDate = addDate.slice(0, 10)
     let isIndex = dates.indexOf(newDate)
 
     if (isIndex !== -1) {
@@ -77,21 +75,10 @@ class App extends Component {
       dates.push(newDate)
     }
 
-    console.log('before cloning')
-    console.log(box)
-    console.log(dates)
-    // this.resetDb()
-
     box = [...dates]
-    console.log('after cloning')
-    console.log(box)
-    console.log(dates)
 
     await this.setState({ dates })
     await this.setState({ box })
-    console.log('state')
-    console.log(this.state.box)
-    console.log(this.state.dates)
 
     this.updateDates()
   }
@@ -136,9 +123,7 @@ class App extends Component {
                     firstDayOfWeek={1}
                     locale='fr-FR'
                     daysOfWeek
-                    // reference='2019-05-01'
                   />
-                  {/* <ul>{keptDates}</ul> */}
                 </Box>
                 {!showSidebar || size !== 'small' ? (
                   <Collapsible direction='horizontal' open={showSidebar}>
