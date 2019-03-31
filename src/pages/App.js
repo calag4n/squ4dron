@@ -13,6 +13,7 @@ import { FormClose, Sign } from 'grommet-icons'
 import { grommet } from 'grommet/themes'
 import Sidebar from '../components/Sidebar'
 import base from '../../base'
+import MyCalendar from '../components/MyCalendar'
 
 if (typeof document !== 'undefined') document.body.style.margin = 0
 
@@ -31,26 +32,22 @@ const AppBar = props => (
 )
 class App extends Component {
   state = {
-    showSidebar: true,
+    showSidebar: false,
     dates: [],
-    syncDates: {},
     box: [],
-    pseudo: ''
+    pseudo: '',
+    Section: 'App'
   }
 
   async componentDidMount() {
     await this.setState({ pseudo: this.props.location.state.pseudo })
 
     const box = await base.fetch(this.state.pseudo, { context: this })
-    console.log(box)
 
     if (box.dates) {
       await this.setState({ box: box.dates })
       await this.setState({ dates: box.dates })
     }
-
-    console.log(this.state.box)
-    console.log(this.state.dates)
   }
 
   async updateDates() {
@@ -59,9 +56,6 @@ class App extends Component {
     }
   }
 
-  resetDb = async () => {
-    await base.post(`${this.state.pseudo}/dates`, { data: null })
-  }
 
   onSelect = async addDate => {
     const { dates } = this.state
@@ -83,8 +77,13 @@ class App extends Component {
     this.updateDates()
   }
 
+  handleClick = event => {
+    const Section = event.target.name
+    this.setState({ Section })
+  }
+
   render() {
-    const { showSidebar, dates, pseudo } = this.state
+    const { showSidebar, dates, pseudo, Section } = this.state
 
     return (
       <Grommet theme={grommet} full>
@@ -102,29 +101,13 @@ class App extends Component {
                   }
                 />
               </AppBar>
-
               <Box direction='row' flex>
-                <Box flex align='center' justify='start'>
-                  {' '}
-                  <Box
-                    margin='small'
-                    width='100%'
-                    justifyContent='between'
-                    gap='small'
-                  >
-                    <h2>{pseudo} selectionnez des dates.</h2>
-                  </Box>
-                  <Calendar
-                    dates={dates}
-                    onSelect={this.onSelect}
-                    size='medium'
-                    bounds={['2018-11-01', '2019-09-30']}
-                    margin={{ vertical: 'large' }}
-                    firstDayOfWeek={1}
-                    locale='fr-FR'
-                    daysOfWeek
-                  />
-                </Box>
+                <MyCalendar
+                  dates={dates}
+                  pseudo={pseudo}
+                  onSelect={this.onSelect}
+                />
+
                 {!showSidebar || size !== 'small' ? (
                   <Collapsible direction='horizontal' open={showSidebar}>
                     <Box
@@ -135,7 +118,7 @@ class App extends Component {
                       align='center'
                       justify='center'
                     >
-                      <Sidebar />
+                      <Sidebar hadleClick={this.handleClick} />
                     </Box>
                   </Collapsible>
                 ) : (
@@ -158,7 +141,7 @@ class App extends Component {
                       align='center'
                       justify='center'
                     >
-                      <Sidebar />
+                      <Sidebar handleClick={this.handleClick} />
                     </Box>
                   </Layer>
                 )}
