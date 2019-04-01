@@ -14,6 +14,8 @@ import Sidebar from '../components/Sidebar'
 import base from '../../base'
 import MyCalendar from '../components/MyCalendar'
 import Chat from '../components/Chat'
+import GlobalCalendar from '../components/GlobalCalendar'
+
 
 if (typeof document !== 'undefined') document.body.style.margin = 0
 
@@ -88,6 +90,9 @@ class App extends Component {
     switch (this.state.section) {
       case 'Chat':
         return <Chat/>
+
+      case 'GlobalCalendar':
+        return <GlobalCalendar/>
       
       default:
         return (

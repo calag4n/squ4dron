@@ -10,6 +10,11 @@ import base from '../../base'
 class Connexion extends Component {
   state = { pseudo: '', mdp: '' }
 
+  componentDidMount(){
+    const logged= localStorage.getItem('log')
+    console.log(logged)
+  }
+
   handleChange = event => {
     const {name, value}= event.target
     this.setState({ [name]: value })
@@ -22,6 +27,9 @@ class Connexion extends Component {
     const box = await base.fetch(this.state.pseudo, { context: this })
     
     if (box.pwd === this.state.mdp) {
+      localStorage.setItem('log', this.state.pseudo)
+      localStorage.setItem('mdp', this.state.mdp)
+
       navigate(`/App/`,
       {
         state: {pseudo: this.state.pseudo}
