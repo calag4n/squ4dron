@@ -12,7 +12,13 @@ class Connexion extends Component {
 
   componentDidMount(){
     const logged= localStorage.getItem('log')
-    console.log(logged)
+    const mdp = localStorage.getItem('mdp')
+    if (logged && mdp) {
+      navigate(`/App/`,
+      {
+        state: {pseudo: logged}
+      })
+    }
   }
 
   handleChange = event => {
@@ -27,8 +33,8 @@ class Connexion extends Component {
     const box = await base.fetch(this.state.pseudo, { context: this })
     
     if (box.pwd === this.state.mdp) {
-      localStorage.setItem('log', this.state.pseudo)
-      localStorage.setItem('mdp', this.state.mdp)
+      localStorage.setItem('log', true)
+      localStorage.setItem('mdp', true)
 
       navigate(`/App/`,
       {
