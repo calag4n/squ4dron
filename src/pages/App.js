@@ -15,7 +15,7 @@ import base from '../../base'
 import MyCalendar from '../components/MyCalendar'
 import Chat from '../components/Chat'
 import GlobalCalendar from '../components/GlobalCalendar'
-
+import { isEqual } from 'date-fns'
 
 if (typeof document !== 'undefined') document.body.style.margin = 0
 
@@ -58,7 +58,6 @@ class App extends Component {
     }
   }
 
-
   onSelect = async addDate => {
     const { dates } = this.state
     let box
@@ -86,27 +85,31 @@ class App extends Component {
     this.setState({ section })
   }
 
-  Section = ()=>{
+  section = () => {
     switch (this.state.section) {
       case 'Chat':
-        return <Chat/>
+        return <Chat />
 
       case 'GlobalCalendar':
-        return <GlobalCalendar/>
-      
+        return <GlobalCalendar />
+
+      case 'ToDoList':
+        this.getAllDates()
+        return null
+
       default:
         return (
           <MyCalendar
-          dates={this.state.dates}
-          pseudo={this.state.pseudo}
-          onSelect={this.onSelect}
+            dates={this.state.dates}
+            pseudo={this.state.pseudo}
+            onSelect={this.onSelect}
           />
         )
     }
   }
 
   render() {
-    const { showSidebar} = this.state
+    const { showSidebar } = this.state
 
     return (
       <Grommet theme={grommet} full>
@@ -115,7 +118,7 @@ class App extends Component {
             <Box fill>
               <AppBar>
                 <Heading level='3' margin='none'>
-                  Entre-Couilles 2019
+                  Antre-cool 2019
                 </Heading>
                 <Button
                   icon={<Sign color='white' />}
@@ -125,7 +128,7 @@ class App extends Component {
                 />
               </AppBar>
               <Box direction='row' flex>
-                {this.Section()}
+                {this.section()}
 
                 {!showSidebar || size !== 'small' ? (
                   <Collapsible direction='horizontal' open={showSidebar}>

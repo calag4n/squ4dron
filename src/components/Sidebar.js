@@ -29,7 +29,7 @@ class Sidebar extends Component {
         />
         <Button
           icon={<Basket size='large' />}
-          label='Liste des courses'
+          label='Liste des tâches'
           margin='large'
           hoverIndicator
           onClick={(e) => this.props.handleClick('ToDoList',e)}

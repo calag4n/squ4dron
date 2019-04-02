@@ -33,7 +33,7 @@ class Connexion extends Component {
     const box = await base.fetch(this.state.pseudo, { context: this })
     
     if (box.pwd === this.state.mdp) {
-      localStorage.setItem('log', true)
+      localStorage.setItem('log', this.state.pseudo)
       localStorage.setItem('mdp', true)
 
       navigate(`/App/`,

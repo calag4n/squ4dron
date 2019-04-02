@@ -1,11 +1,16 @@
 import React from 'react'
 import dateFns from 'date-fns'
-import './GlobalCalendar.css';
+import './GlobalCalendar.css'
+import base from '../../base'
 
 class Calendar extends React.Component {
   state = {
     currentMonth: new Date(),
-    selectedDate: new Date()
+    selectedDate: new Date(),
+    box: null
+  }
+  componentDidMount() {
+    this.getBox()
   }
 
   onDateClick = day => {
@@ -58,6 +63,39 @@ class Calendar extends React.Component {
     return <div className='days row'>{days}</div>
   }
 
+  async getBox() {
+    const box = await base.fetch('/', { context: this })
+    await this.setState({ box })
+  }
+
+  badgeThatDay(day) {
+    const { box } = this.state
+    let whoIsBadging = ''
+    console.log(day)
+    console.log(box)
+    // console.log(Object.keys(box))
+    //  .forEach(user => {
+    // console.log(user)
+    //
+    // Object.keys(box[user].dates).forEach(date => {
+    // console.log(date)
+    // console.log(dateFns.isEqual(day, date))
+    // if (dateFns.isEqual(day, date)) {
+    // whoIsBadging = 't'
+    // }
+    // })
+    // })
+    for (let user in box){
+      box[user].dates.forEach(date => {
+        if (dateFns.isEqual(day, date)){
+          whoIsBadging += user + ' '
+        }
+        
+      });
+    }
+    return whoIsBadging
+  }
+
   renderCells() {
     const { currentMonth, selectedDate } = this.state
     const monthStart = dateFns.startOfMonth(currentMonth)
@@ -86,6 +124,7 @@ class Calendar extends React.Component {
             key={day}
             onClick={() => this.onDateClick(dateFns.parse(cloneDay))}
           >
+            {this.badgeThatDay(day)}
             <span className='number'>{formattedDate}</span>
             <span className='bg'>{formattedDate}</span>
           </div>
