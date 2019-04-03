@@ -25,12 +25,20 @@
 /* VARIABLES */
 
 :root {
-  --main-color: #1a8fff;
+  --main-color: #7D4CDB;
   --text-color: #777;
   --text-color-light: #ccc;
   --border-color: #eee;
   --bg-color: #f9f9f9;
   --neutral-color: #fff;
+
+  --user-0: #ff25c8 ;
+  --user-1: #2557ff ;
+  --user-2: #ffde25 ;
+  --user-3: #49ff25 ;
+  --user-4: #25fff4 ;
+  --user-5: #ff2525 ;
+  --user-6: #ff9925 ;
 }
 
 
@@ -229,4 +237,11 @@ main {
   flex-grow: 0;
   flex-basis: calc(100%/7);
   width: calc(100%/7);
+}
+
+.user-0{
+ color: variable(--user-0)
+}
+.user-1{
+ color: variable(--user-1)
 }

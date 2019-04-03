@@ -2,6 +2,9 @@ import React from 'react'
 import dateFns from 'date-fns'
 import './GlobalCalendar.css'
 import base from '../../base'
+import { User } from 'grommet-icons'
+
+const userTheme = ['#ff25c8','#2557ff','#ffde25','#49ff25','#25fff4','#ff2525','#ff9925']
 
 class Calendar extends React.Component {
   state = {
@@ -71,29 +74,24 @@ class Calendar extends React.Component {
   badgeThatDay(day) {
     const { box } = this.state
     let whoIsBadging = ''
+
     console.log(day)
     console.log(box)
-    // console.log(Object.keys(box))
-    //  .forEach(user => {
-    // console.log(user)
-    //
-    // Object.keys(box[user].dates).forEach(date => {
-    // console.log(date)
-    // console.log(dateFns.isEqual(day, date))
-    // if (dateFns.isEqual(day, date)) {
-    // whoIsBadging = 't'
-    // }
-    // })
-    // })
-    for (let user in box){
+
+    for (let user in box) {
       box[user].dates.forEach(date => {
-        if (dateFns.isEqual(day, date)){
-          whoIsBadging += user + ' '
+        if (dateFns.isEqual(day, date)) {
+          whoIsBadging += user + '/'
         }
-        
-      });
+      })
     }
-    return whoIsBadging
+    const badges = whoIsBadging.split('/')
+    badges.pop()
+    const badgesComponents = badges.map((user, i) => (
+      <User color={userTheme[i]} />
+    ))
+    console.log(badgesComponents)
+    return badgesComponents
   }
 
   renderCells() {
