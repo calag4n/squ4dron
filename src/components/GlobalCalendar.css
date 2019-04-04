@@ -185,7 +185,7 @@ main {
 
 .calendar .body .selected {
   border-left: 10px solid transparent;
-  border-image: linear-gradient(45deg, #1a8fff 0%,#53cbf1 40%);
+  border-image: linear-gradient(45deg, #7D4CDB 0%,rgb(176, 141, 240) 40%);
   border-image-slice: 1;
 }
 

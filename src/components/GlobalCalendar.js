@@ -2,9 +2,19 @@ import React from 'react'
 import dateFns from 'date-fns'
 import './GlobalCalendar.css'
 import base from '../../base'
-import { User } from 'grommet-icons'
+import { Fireball } from 'grommet-icons'
 
-const userTheme = ['#ff25c8','#2557ff','#ffde25','#49ff25','#25fff4','#ff2525','#ff9925']
+const userTheme = [
+  '#ff25c8',
+  '#2557ff',
+  '#ffde25',
+  '#49ff25',
+  '#25fff4',
+  '#ff2525',
+  '#ff9925',
+  '#18b668',
+  '#8607ce'
+]
 
 class Calendar extends React.Component {
   state = {
@@ -73,25 +83,25 @@ class Calendar extends React.Component {
 
   badgeThatDay(day) {
     const { box } = this.state
-    let whoIsBadging = ''
+    let whoIsBadging = []
 
     console.log(day)
-    console.log(box)
 
     for (let user in box) {
-      box[user].dates.forEach(date => {
-        if (dateFns.isEqual(day, date)) {
-          whoIsBadging += user + '/'
-        }
-      })
+      if (box[user].dates) {
+        box[user].dates.forEach((date, i )=> {
+          if (dateFns.isEqual(day, date)) {
+            whoIsBadging.push({color : box[user].color, name: [user]})
+          }
+        })
+      }
     }
-    const badges = whoIsBadging.split('/')
-    badges.pop()
-    const badgesComponents = badges.map((user, i) => (
-      <User color={userTheme[i]} />
+    console.log(whoIsBadging)
+    const badges = whoIsBadging.map((user, i) => (
+      <Fireball  color={user.color} userName={user.name}/>
     ))
-    console.log(badgesComponents)
-    return badgesComponents
+
+    return badges
   }
 
   renderCells() {
