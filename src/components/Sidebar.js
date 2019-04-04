@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Box, Button } from 'grommet'
-import { Plan, Schedules, ChatOption, Basket } from 'grommet-icons'
+import { Plan, Schedules, ChatOption, Basket, Action } from 'grommet-icons'
 
 class Sidebar extends Component {
   render() {
@@ -33,6 +33,13 @@ class Sidebar extends Component {
           margin='large'
           hoverIndicator
           onClick={(e) => this.props.handleClick('ToDoList',e)}
+        />
+        <Button
+          icon={<Action size='large' />}
+          label='Déconnexion'
+          margin='large'
+          hoverIndicator
+          onClick={(e) => this.props.handleClick('Deconnect',e)}
         />
       </Box>
     )

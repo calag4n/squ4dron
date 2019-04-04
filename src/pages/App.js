@@ -16,6 +16,7 @@ import MyCalendar from '../components/MyCalendar'
 import Chat from '../components/Chat'
 import GlobalCalendar from '../components/GlobalCalendar'
 import { isEqual } from 'date-fns'
+import { navigate } from 'gatsby'
 
 if (typeof document !== 'undefined') document.body.style.margin = 0
 
@@ -96,6 +97,12 @@ class App extends Component {
       case 'ToDoList':
         this.getAllDates()
         return null
+
+      case 'Deconnect':
+        localStorage.removeItem('log')
+        localStorage.removeItem('mdp')
+        navigate('/')
+        break
 
       default:
         return (
