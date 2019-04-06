@@ -9,35 +9,35 @@ class Sidebar extends Component {
         <Button
           icon={<Plan size='large' />}
           label='Mes dates'
-          margin='large'
+          margin={this.props.sizeContext}
           hoverIndicator
           onClick={(e) => this.props.handleClick('MyCalendar',e)}
         />
         <Button
           icon={<Schedules size='large' />}
           label='Calendrier global'
-          margin='large'
+          margin={this.props.sizeContext}
           hoverIndicator
           onClick={(e) => this.props.handleClick('GlobalCalendar',e)}
         />
         <Button
           icon={<ChatOption size='large' />}
           label='Messages'
-          margin='large'
+          margin={this.props.sizeContext}
           hoverIndicator
           onClick={(e) => this.props.handleClick('Chat',e)}
         />
         <Button
           icon={<Basket size='large' />}
           label='Liste des tâches'
-          margin='large'
+          margin={this.props.sizeContext}
           hoverIndicator
           onClick={(e) => this.props.handleClick('ToDoList',e)}
         />
         <Button
           icon={<Action size='large' />}
           label='Déconnexion'
-          margin='large'
+          margin={this.props.sizeContext}
           hoverIndicator
           onClick={(e) => this.props.handleClick('Deconnect',e)}
         />

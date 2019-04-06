@@ -95,7 +95,7 @@ class App extends Component {
         return <GlobalCalendar />
 
       case 'ToDoList':
-        this.getAllDates()
+        
         return null
 
       case 'Deconnect':
@@ -147,7 +147,10 @@ class App extends Component {
                       align='center'
                       justify='center'
                     >
-                      <Sidebar handleClick={this.handleClick} />
+                      <Sidebar
+                        sizeContext={size}
+                        handleClick={this.handleClick}
+                      />
                     </Box>
                   </Collapsible>
                 ) : (
@@ -170,7 +173,10 @@ class App extends Component {
                       align='center'
                       justify='center'
                     >
-                      <Sidebar handleClick={this.handleClick} />
+                      <Sidebar
+                        sizeContext={size}
+                        handleClick={this.handleClick}
+                      />
                     </Box>
                   </Layer>
                 )}
