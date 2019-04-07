@@ -4,18 +4,6 @@ import './GlobalCalendar.css'
 import base from '../../base'
 import { Fireball } from 'grommet-icons'
 
-const userTheme = [
-  '#ff25c8',
-  '#2557ff',
-  '#ffde25',
-  '#49ff25',
-  '#25fff4',
-  '#ff2525',
-  '#ff9925',
-  '#18b668',
-  '#8607ce'
-]
-
 class Calendar extends React.Component {
   state = {
     currentMonth: new Date(),
@@ -89,16 +77,16 @@ class Calendar extends React.Component {
 
     for (let user in box) {
       if (box[user].dates) {
-        box[user].dates.forEach((date, i )=> {
+        box[user].dates.forEach((date, i) => {
           if (dateFns.isEqual(day, date)) {
-            whoIsBadging.push({color : box[user].color, name: [user]})
+            whoIsBadging.push({ color: box[user].color, name: [user] })
           }
         })
       }
     }
     console.log(whoIsBadging)
     const badges = whoIsBadging.map((user, i) => (
-      <Fireball  color={user.color} userName={user.name}/>
+      <Fireball color={user.color} userName={user.name} />
     ))
 
     return badges

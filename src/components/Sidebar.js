@@ -1,49 +1,54 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Box, Button } from 'grommet'
 import { Plan, Schedules, ChatOption, Basket, Action } from 'grommet-icons'
+import PropTypes from 'prop-types'
 
-class Sidebar extends Component {
-  render() {
-    return (
-      <Box>
-        <Button
-          icon={<Plan size='large' />}
-          label='Mes dates'
-          margin={this.props.sizeContext}
-          hoverIndicator
-          onClick={(e) => this.props.handleClick('MyCalendar',e)}
-        />
-        <Button
-          icon={<Schedules size='large' />}
-          label='Calendrier global'
-          margin={this.props.sizeContext}
-          hoverIndicator
-          onClick={(e) => this.props.handleClick('GlobalCalendar',e)}
-        />
-        <Button
-          icon={<ChatOption size='large' />}
-          label='Messages'
-          margin={this.props.sizeContext}
-          hoverIndicator
-          onClick={(e) => this.props.handleClick('Chat',e)}
-        />
-        <Button
-          icon={<Basket size='large' />}
-          label='Liste des tâches'
-          margin={this.props.sizeContext}
-          hoverIndicator
-          onClick={(e) => this.props.handleClick('ToDoList',e)}
-        />
-        <Button
-          icon={<Action size='large' />}
-          label='Déconnexion'
-          margin={this.props.sizeContext}
-          hoverIndicator
-          onClick={(e) => this.props.handleClick('Deconnect',e)}
-        />
-      </Box>
-    )
-  }
+/**
+ * @augments {Component<{  sizeContext:string,  handleClick:Function>}
+ */
+const Sidebar = ({sizeContext, handleClick}) => (
+  <Box>
+    <Button
+      icon={<Plan size='large' />}
+      label='Mes dates'
+      margin={sizeContext}
+      hoverIndicator
+      onClick={e => handleClick('MyCalendar', e)}
+    />
+    <Button
+      icon={<Schedules size='large' />}
+      label='Calendrier global'
+      margin={sizeContext}
+      hoverIndicator
+      onClick={e => handleClick('GlobalCalendar', e)}
+    />
+    <Button
+      icon={<ChatOption size='large' />}
+      label='Messages'
+      margin={sizeContext}
+      hoverIndicator
+      onClick={e => handleClick('Chat', e)}
+    />
+    <Button
+      icon={<Basket size='large' />}
+      label='Liste des tâches'
+      margin={sizeContext}
+      hoverIndicator
+      onClick={e => handleClick('ToDoList', e)}
+    />
+    <Button
+      icon={<Action size='large' />}
+      label='Déconnexion'
+      margin={sizeContext}
+      hoverIndicator
+      onClick={e => handleClick('Deconnect', e)}
+    />
+  </Box>
+)
+
+Sidebar.propTypes = {
+  sizeContext: PropTypes.string,
+  handleClick: PropTypes.func.isRequired
 }
 
 export default Sidebar

@@ -10,35 +10,33 @@ import base from '../../base'
 class Connexion extends Component {
   state = { pseudo: '', mdp: '' }
 
-  componentDidMount(){
-    const logged= localStorage.getItem('log')
+  componentDidMount() {
+    const logged = localStorage.getItem('log')
     const mdp = localStorage.getItem('mdp')
     if (logged && mdp) {
-      navigate(`/App/`,
-      {
-        state: {pseudo: logged}
+      navigate(`/App/`, {
+        state: { pseudo: logged }
       })
     }
   }
 
   handleChange = event => {
-    const {name, value}= event.target
+    const { name, value } = event.target
     this.setState({ [name]: value })
   }
 
   handleSubmit = async event => {
     event.preventDefault()
-    const {name, value}= event.target
+    const { name, value } = event.target
     this.setState({ [name]: value })
     const box = await base.fetch(this.state.pseudo, { context: this })
-    
+
     if (box.pwd === this.state.mdp) {
       localStorage.setItem('log', this.state.pseudo)
       localStorage.setItem('mdp', true)
 
-      navigate(`/App/`,
-      {
-        state: {pseudo: this.state.pseudo}
+      navigate(`/App/`, {
+        state: { pseudo: this.state.pseudo }
       })
     }
   }

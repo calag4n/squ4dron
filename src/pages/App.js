@@ -15,24 +15,11 @@ import base from '../../base'
 import MyCalendar from '../components/MyCalendar'
 import Chat from '../components/Chat'
 import GlobalCalendar from '../components/GlobalCalendar'
-import { isEqual } from 'date-fns'
 import { navigate } from 'gatsby'
+import AppBar from '../components/AppBar'
 
 if (typeof document !== 'undefined') document.body.style.margin = 0
 
-const AppBar = props => (
-  <Box
-    tag='header'
-    direction='row'
-    align='center'
-    justify='between'
-    background='brand'
-    pad={{ left: 'medium', right: 'small', vertical: 'small' }}
-    elevation='medium'
-    style={{ zIndex: '100' }}
-    {...props}
-  />
-)
 class App extends Component {
   state = {
     showSidebar: false,
@@ -89,13 +76,12 @@ class App extends Component {
   section = () => {
     switch (this.state.section) {
       case 'Chat':
-        return <Chat />
+        return <Chat pseudo={this.state.pseudo} />
 
       case 'GlobalCalendar':
         return <GlobalCalendar />
 
       case 'ToDoList':
-        
         return null
 
       case 'Deconnect':

@@ -19,6 +19,7 @@
     "grommet": "^2.6.5",
     "grommet-icons": "^3.2.1",
     "polished": "^2.3.3",
+    "prop-types": "^15.7.2",
     "re-base": "^4.0.0",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
