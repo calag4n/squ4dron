@@ -29,7 +29,7 @@ class Connexion extends Component {
     event.preventDefault()
     const { name, value } = event.target
     this.setState({ [name]: value })
-    const box = await base.fetch(this.state.pseudo, { context: this })
+    const box = await base.fetch(`/users/${this.state.pseudo}`, { context: this })
 
     if (box.pwd === this.state.mdp) {
       localStorage.setItem('log', this.state.pseudo)

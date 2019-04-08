@@ -5,7 +5,7 @@ const Message = ({ user, message, isUser }) => {
   if (isUser(user.pseudo)) {
     console.log(user)
     return (
-      <p className='user-message' style={{ border: `1px solid ${user.color}` }}>
+      <p className='user-message' style={{ 'box-shadow' : `-2px -2px ${user.color}` }}>
         {message}
       </p>
     )
@@ -13,7 +13,7 @@ const Message = ({ user, message, isUser }) => {
     return (
       <p
         className='not-user-message'
-        style={{ border: `1px solid ${user.color}` }}
+        style={{ 'box-shadow' : `2px 2px ${user.color}` }}
       >
         <strong>{user.pseudo}: </strong>
         {message}

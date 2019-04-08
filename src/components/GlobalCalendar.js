@@ -65,7 +65,7 @@ class Calendar extends React.Component {
   }
 
   async getBox() {
-    const box = await base.fetch('/', { context: this })
+    const box = await base.fetch('/users/', { context: this })
     await this.setState({ box })
   }
 

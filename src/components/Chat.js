@@ -37,10 +37,10 @@ class Chat extends Component {
 
   isUser = pseudo => pseudo === this.state.pseudo
 
-  async getColor(pseudo) {
-    const box = await base.fetch(pseudo, { context: this })
-    console.log(box.color)
-    return box.color
+   getColor(pseudo) {
+    const color = this.props.usersData[pseudo].color
+    console.log(color)
+    return color
   }
 
   render() {
@@ -58,10 +58,10 @@ class Chat extends Component {
         )})
 
     return (
-      <Box fill>
+      <Box fill >
         <Box fill className='box' flex justify='end' margin={{'bottom':'small'}}>
-          <Box className='messages' ref={this.messageRef}>
-            <Box className='message'>{messagesList}</Box>
+          <Box className='messages' style={{'overflow-y' :'scroll', 'max-height': '75vh'}} ref={this.messageRef} >
+            <Box  className='message'>{messagesList}</Box>
           </Box>
           <ChatForm
             length='150'

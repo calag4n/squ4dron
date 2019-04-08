@@ -24,31 +24,37 @@ class App extends Component {
   state = {
     showSidebar: false,
     dates: [],
-    box: [],
+    boxDates: [],
+    box: {},
     pseudo: '',
     section: 'MyCalendar'
   }
 
   async componentDidMount() {
     await this.setState({ pseudo: this.props.location.state.pseudo })
+    const pseudo = await this.state.pseudo
 
-    const box = await base.fetch(this.state.pseudo, { context: this })
+    const box = await base.fetch('/users/', { context: this })
 
-    if (box.dates) {
-      await this.setState({ box: box.dates })
-      await this.setState({ dates: box.dates })
+    if (box[pseudo].dates) {
+      await this.setState({ boxDates: box[pseudo].dates })
+      await this.setState({ dates: box[pseudo].dates })
     }
+
+    await this.setState({ box })
   }
 
   async updateDates() {
-    if (this.state.box !== undefined) {
-      await base.post(`${this.state.pseudo}/dates`, { data: this.state.box })
+    if (this.state.boxDates !== undefined) {
+      await base.post(`${this.state.pseudo}/dates`, {
+        data: this.state.boxDates
+      })
     }
   }
 
   onSelect = async addDate => {
     const { dates } = this.state
-    let box
+    let boxDates
     const newDate = addDate.slice(0, 10)
     let isIndex = dates.indexOf(newDate)
 
@@ -58,10 +64,10 @@ class App extends Component {
       dates.push(newDate)
     }
 
-    box = [...dates]
+    boxDates = [...dates]
 
     await this.setState({ dates })
-    await this.setState({ box })
+    await this.setState({ boxDates })
 
     this.updateDates()
   }
@@ -76,7 +82,7 @@ class App extends Component {
   section = () => {
     switch (this.state.section) {
       case 'Chat':
-        return <Chat pseudo={this.state.pseudo} />
+        return <Chat pseudo={this.state.pseudo} usersData={this.state.box} />
 
       case 'GlobalCalendar':
         return <GlobalCalendar />
