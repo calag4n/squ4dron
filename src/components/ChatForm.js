@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Form, TextArea, Button } from 'grommet'
 
 class ChatForm extends Component {
-  state = { message: '', length: this.props.length }
+  state = { message: '' }
 
   handleSubmit = event => {
     event.preventDefault()
@@ -11,8 +11,7 @@ class ChatForm extends Component {
 
   handleChange = event => {
     const message = event.target.value
-    const length = this.props.length - message.length
-    this.setState({ message, length })
+    this.setState({ message })
   }
 
   handleKeyUp = event => {
@@ -30,7 +29,7 @@ class ChatForm extends Component {
     }
 
     addMessage(message)
-    this.setState({ message: '', length: this.props.length })
+    this.setState({ message: '' })
   }
 
   render() {
@@ -40,7 +39,7 @@ class ChatForm extends Component {
       <Form
         onSubmit={this.handleSubmit}
         className='form'
-        style={{padding : '1.1em'}}
+        style={{ padding: '1.1em' }}
         align='end'
       >
         <TextArea
@@ -48,10 +47,8 @@ class ChatForm extends Component {
           onChange={this.handleChange}
           onKeyUp={this.handleKeyUp}
           required
-          maxLength={this.props.length}
-          margin='medium' 
+          margin='medium'
         />
-        <div className='info'>{this.state.length}</div>
         <Button type='submit' label='Envoyer' />
       </Form>
     )

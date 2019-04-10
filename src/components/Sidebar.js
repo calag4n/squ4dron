@@ -34,7 +34,7 @@ const Sidebar = ({sizeContext, handleClick}) => (
       label='Liste des tâches'
       margin={sizeContext}
       hoverIndicator
-      onClick={e => handleClick('ToDoList', e)}
+      onClick={e => handleClick('TodoList', e)}
     />
     <Button
       icon={<Action size='large' />}

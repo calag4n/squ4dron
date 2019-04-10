@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { navigate } from 'gatsby'
+import base from '../../base'
 import {
   Box,
   Button,
@@ -11,12 +13,12 @@ import {
 import { FormClose, Sign } from 'grommet-icons'
 import { grommet } from 'grommet/themes'
 import Sidebar from '../components/Sidebar'
-import base from '../../base'
 import MyCalendar from '../components/MyCalendar'
 import Chat from '../components/Chat'
 import GlobalCalendar from '../components/GlobalCalendar'
-import { navigate } from 'gatsby'
 import AppBar from '../components/AppBar'
+import TodoList from '../components/TodoList'
+
 
 if (typeof document !== 'undefined') document.body.style.margin = 0
 
@@ -77,6 +79,7 @@ class App extends Component {
     console.log(event.target)
     console.log(section)
     this.setState({ section })
+    this.setState({ showSidebar: false })
   }
 
   section = () => {
@@ -87,8 +90,8 @@ class App extends Component {
       case 'GlobalCalendar':
         return <GlobalCalendar />
 
-      case 'ToDoList':
-        return null
+      case 'TodoList':
+        return <TodoList />
 
       case 'Deconnect':
         localStorage.removeItem('log')
@@ -117,7 +120,7 @@ class App extends Component {
             <Box fill>
               <AppBar>
                 <Heading level='3' margin='none'>
-                  Antre-cool 2019
+                  Entre Couilles 2019
                 </Heading>
                 <Button
                   icon={<Sign color='white' />}
