@@ -12,11 +12,11 @@
 	-webkit-overflow-scrolling:touch;
 } */
 
-.messages::-webkit-scrollbar {
+.messages::-webkit-scrollbar, .task-list::-webkit-scrollbar {
     width: 0.4em;
 }
  
-.messages::-webkit-scrollbar-thumb {
+.messages::-webkit-scrollbar-thumb, .task-list::-webkit-scrollbar-thumb{
   background-color: #7D4CDB;
 }
 

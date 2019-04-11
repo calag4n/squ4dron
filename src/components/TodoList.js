@@ -40,6 +40,7 @@ class TodoList extends Component {
             vertical: 'small'
           }}
           width='medium'
+          style={{minHeight: '35px'}}
           border={{
             side: 'bottom',
             size: 'xsmall'
@@ -79,7 +80,9 @@ class TodoList extends Component {
             />
           </Form>
         </Box>
-        <Box>{this.renderTasksList()}</Box>
+        <Box className='task-list' style={{ 'overflowY': 'scroll', 'height': '75vh' }}>
+          {this.renderTasksList()}
+        </Box>
       </Box>
     )
   }

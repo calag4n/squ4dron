@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Form, TextArea, Button } from 'grommet'
+import PropTypes from 'prop-types'
 
 class ChatForm extends Component {
   state = { message: '' }
@@ -56,3 +57,9 @@ class ChatForm extends Component {
 }
 
 export default ChatForm
+
+
+ChatForm.propTypes = {
+  pseudo: PropTypes.string.isRequired,
+  addMessage: PropTypes.func.isRequired
+}
