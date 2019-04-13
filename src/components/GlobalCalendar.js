@@ -3,20 +3,25 @@ import dateFns from 'date-fns'
 import './GlobalCalendar.css'
 import base from '../../base'
 import { Fireball } from 'grommet-icons'
+import ProfilCards from './ProfilCards'
 
 class Calendar extends React.Component {
   state = {
     currentMonth: new Date(),
     selectedDate: new Date(),
-    box: null
+    box: null,
+    profilLayer: undefined
   }
   componentDidMount() {
     this.getBox()
   }
 
   onDateClick = day => {
+    const profilLayer = this.whoIsThere(day)
+    console.log(profilLayer)
     this.setState({
-      selectedDate: day
+      selectedDate: day,
+      profilLayer
     })
   }
   nextMonth = () => {
@@ -69,9 +74,9 @@ class Calendar extends React.Component {
     await this.setState({ box })
   }
 
-  badgeThatDay(day) {
+  whoIsThere(day) {
     const { box } = this.state
-    let whoIsBadging = []
+    let whoIsThere = []
 
     console.log(day)
 
@@ -79,13 +84,19 @@ class Calendar extends React.Component {
       if (box[user].dates) {
         box[user].dates.forEach((date, i) => {
           if (dateFns.isEqual(day, date)) {
-            whoIsBadging.push({ color: box[user].color, name: [user] })
+            whoIsThere.push({ color: box[user].color, name: [user] })
           }
         })
       }
     }
-    console.log(whoIsBadging)
-    const badges = whoIsBadging.map((user, i) => (
+    
+    return whoIsThere
+  }
+
+  badgeThatDay(day) {
+    const whoIsThere = this.whoIsThere(day)
+
+    const badges = whoIsThere.map((user, i) => (
       <Fireball color={user.color} userName={user.name} />
     ))
 
@@ -134,7 +145,17 @@ class Calendar extends React.Component {
       )
       days = []
     }
-    return <div className='body'>{rows}</div>
+    return (
+      <div className='body'>
+        {rows}
+        {this.state.profilLayer ? (
+          <ProfilCards
+            isThere={this.state.profilLayer}
+            onClose={() => this.setState({ profilLayer: undefined })}
+          />
+        ) : null}
+      </div>
+    )
   }
 
   render() {

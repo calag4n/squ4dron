@@ -9,6 +9,7 @@ firebaseApp = firebase.initializeApp({
   apiKey: "AIzaSyDIr2ztE9qOQeAtjldnDB6pEhJRG3CMUpQ",
   authDomain: "antre-cool.firebaseapp.com",
   databaseURL: "https://antre-cool.firebaseio.com",
+  storageBucket: "antre-cool.appspot.com"
 })
 
 base = Rebase.createClass(firebaseApp.database())

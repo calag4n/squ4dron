@@ -48,7 +48,7 @@ class App extends Component {
 
   async updateDates() {
     if (this.state.boxDates !== undefined) {
-      await base.post(`${this.state.pseudo}/dates`, {
+      await base.post(`users/${this.state.pseudo}/dates`, {
         data: this.state.boxDates
       })
     }
