@@ -73,19 +73,16 @@ class Calendar extends React.Component {
     const { box } = this.state
     let whoIsBadging = []
 
-    console.log(day)
-
     for (let user in box) {
       if (box[user].dates) {
-        box[user].dates.forEach((date, i) => {
+        box[user].dates.forEach(date => {
           if (dateFns.isEqual(day, date)) {
             whoIsBadging.push({ color: box[user].color, name: [user] })
           }
         })
       }
     }
-    console.log(whoIsBadging)
-    const badges = whoIsBadging.map((user, i) => (
+    const badges = whoIsBadging.map(user => (
       <Fireball color={user.color} userName={user.name} />
     ))
 

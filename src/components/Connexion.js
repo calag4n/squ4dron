@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { Grommet, Box, Form, FormField, Button } from 'grommet'
-
+import PropTypes from 'prop-types'
 import { grommet } from 'grommet/themes'
 
 class Connexion extends Component {
@@ -10,7 +10,6 @@ class Connexion extends Component {
   handleChange = event => {
     const pseudo = event.target.value
     this.setState({ pseudo })
-
   }
 
   handleSubmit = event => {
@@ -48,4 +47,9 @@ class Connexion extends Component {
     )
   }
 }
+
+Connexion.propTypes = {
+  setPseudo: PropTypes.func.isRequired
+}
+
 export default Connexion

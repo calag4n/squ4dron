@@ -18,7 +18,7 @@ import Chat from '../components/Chat'
 import GlobalCalendar from '../components/GlobalCalendar'
 import AppBar from '../components/AppBar'
 import TodoList from '../components/TodoList'
-
+import PropTypes from 'prop-types'
 
 if (typeof document !== 'undefined') document.body.style.margin = 0
 
@@ -76,8 +76,6 @@ class App extends Component {
 
   handleClick = (section, event) => {
     event.stopPropagation()
-    console.log(event.target)
-    console.log(section)
     this.setState({ section })
     this.setState({ showSidebar: false })
   }
@@ -182,6 +180,14 @@ class App extends Component {
       </Grommet>
     )
   }
+}
+
+App.propTypes = {
+  location: PropTypes.shape({
+    state: PropTypes.shape({
+      pseudo: PropTypes.string.isRequired
+    }).isRequired
+  }).isRequired
 }
 
 export default App

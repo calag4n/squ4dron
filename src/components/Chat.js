@@ -2,7 +2,7 @@ import React, { Component, createRef } from 'react'
 import './Chat.css'
 import ChatForm from './ChatForm'
 import Message from './Message'
-
+import PropTypes from 'prop-types'
 import base from '../../base'
 import { Box } from 'grommet'
 
@@ -37,9 +37,8 @@ class Chat extends Component {
 
   isUser = pseudo => pseudo === this.state.pseudo
 
-   getColor(pseudo) {
+  getColor(pseudo) {
     const color = this.props.usersData[pseudo].color
-    console.log(color)
     return color
   }
 
@@ -49,19 +48,29 @@ class Chat extends Component {
       const color = this.getColor(pseudo)
       return (
         <Message
-        key={key}
-        user={{pseudo, color}}
-        message={this.state.messages[key].message}
-        isUser={this.isUser}
+          key={key}
+          user={{ pseudo, color }}
+          message={this.state.messages[key].message}
+          isUser={this.isUser}
         />
-      
-        )})
+      )
+    })
 
     return (
-      <Box fill >
-        <Box fill className='box' flex justify='end' margin={{'bottom':'small'}}>
-          <Box className='messages' style={{'overflow-y' :'scroll', 'max-height': '75vh'}} ref={this.messageRef} >
-            <Box  className='message'>{messagesList}</Box>
+      <Box fill>
+        <Box
+          fill
+          className='box'
+          flex
+          justify='end'
+          margin={{ bottom: 'small' }}
+        >
+          <Box
+            className='messages'
+            style={{ 'overflow-y': 'scroll', 'max-height': '75vh' }}
+            ref={this.messageRef}
+          >
+            <Box className='message'>{messagesList}</Box>
           </Box>
           <ChatForm
             length='150'
@@ -72,6 +81,11 @@ class Chat extends Component {
       </Box>
     )
   }
+}
+
+Chat.propTypes = {
+  usersData: PropTypes.object.isRequired,
+  pseudo: PropTypes.string.isRequired
 }
 
 export default Chat
