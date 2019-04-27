@@ -1,7 +1,8 @@
 import React from 'react'
 import { Box, Layer, Text } from 'grommet'
+import PropTypes from 'prop-types'
 
-const ProfilCards = ({ isThere, onClose }) => {
+const CardsList = ({ isThere, onClose }) => {
   const present = isThere.map(person => (
     <Box
       key={person.name}
@@ -26,4 +27,9 @@ const ProfilCards = ({ isThere, onClose }) => {
   )
 }
 
-export default ProfilCards
+CardsList.propTypes = {
+  isThere: PropTypes.arrayOf(PropTypes.object),
+  onClose: PropTypes.func.isRequired
+}
+
+export default CardsList

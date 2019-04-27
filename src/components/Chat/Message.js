@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 
 const Message = ({ user, message, isUser }) => {
   if (isUser(user.pseudo)) {
-    console.log(user)
     return (
       <p className='user-message' style={{ 'boxShadow' : `-2px -2px ${user.color}` }}>
         {message}

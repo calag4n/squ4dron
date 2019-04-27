@@ -1,9 +1,9 @@
 import React from 'react'
 import dateFns from 'date-fns'
 import './GlobalCalendar.css'
-import base from '../../base'
+import base from '../../../base'
 import { Fireball } from 'grommet-icons'
-import ProfilCards from './ProfilCards'
+import CardsList from './CardsList'
 
 class Calendar extends React.Component {
   state = {
@@ -18,7 +18,6 @@ class Calendar extends React.Component {
 
   onDateClick = day => {
     const profilLayer = this.whoIsThere(day)
-    console.log(profilLayer)
     this.setState({
       selectedDate: day,
       profilLayer
@@ -78,26 +77,24 @@ class Calendar extends React.Component {
     const { box } = this.state
     let whoIsThere = []
 
-    console.log(day)
-
     for (let user in box) {
       if (box[user].dates) {
-        box[user].dates.forEach((date, i) => {
+        box[user].dates.forEach(date => {
           if (dateFns.isEqual(day, date)) {
             whoIsThere.push({ color: box[user].color, name: [user] })
           }
         })
       }
     }
-    
+
     return whoIsThere
   }
 
   badgeThatDay(day) {
     const whoIsThere = this.whoIsThere(day)
 
-    const badges = whoIsThere.map((user, i) => (
-      <Fireball color={user.color} userName={user.name} />
+    const badges = whoIsThere.map(user => (
+      <Fireball key={user.name} color={user.color} userName={user.name} />
     ))
 
     return badges
@@ -149,7 +146,7 @@ class Calendar extends React.Component {
       <div className='body'>
         {rows}
         {this.state.profilLayer ? (
-          <ProfilCards
+          <CardsList
             isThere={this.state.profilLayer}
             onClose={() => this.setState({ profilLayer: undefined })}
           />

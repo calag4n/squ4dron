@@ -12,13 +12,13 @@ import {
 } from 'grommet'
 import { FormClose, Sign } from 'grommet-icons'
 import { grommet } from 'grommet/themes'
-import Sidebar from '../components/Sidebar'
-import MyCalendar from '../components/MyCalendar'
-import Chat from '../components/Chat'
-import GlobalCalendar from '../components/GlobalCalendar'
-import AppBar from '../components/AppBar'
-import TodoList from '../components/TodoList'
-
+import Sidebar from '../components/Layout/Sidebar'
+import MyCalendar from '../components/MyCalendar/MyCalendar'
+import Chat from '../components/Chat/Chat'
+import GlobalCalendar from '../components/GlobalCalendar/GlobalCalendar'
+import AppBar from '../components/Layout/AppBar'
+import TodoList from '../components/TodoList/TodoList'
+import PropTypes from 'prop-types'
 
 if (typeof document !== 'undefined') document.body.style.margin = 0
 
@@ -76,8 +76,6 @@ class App extends Component {
 
   handleClick = (section, event) => {
     event.stopPropagation()
-    console.log(event.target)
-    console.log(section)
     this.setState({ section })
     this.setState({ showSidebar: false })
   }
@@ -182,6 +180,14 @@ class App extends Component {
       </Grommet>
     )
   }
+}
+
+App.propTypes = {
+  location: PropTypes.shape({
+    state: PropTypes.shape({
+      pseudo: PropTypes.string.isRequired
+    }).isRequired
+  }).isRequired
 }
 
 export default App
