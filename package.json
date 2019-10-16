@@ -1,6 +1,8 @@
 {
   "name": "squ4dron",
   "description": "A team projects tool.",
+  "version": "0.5.0",
+  "author": "calag4n",
   "license": "MIT",
   "scripts": {
     "develop": "gatsby develop",
