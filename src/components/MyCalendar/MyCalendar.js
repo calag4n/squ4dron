@@ -22,8 +22,8 @@ const MyCalendar = ({ pseudo, dates, onSelect }) => (
 
 MyCalendar.propTypes = {
   pseudo: PropTypes.string.isRequired,
-  dates: PropTypes.array.isRequired,
-  onSelect: PropTypes.func.isRequired
+  dates: PropTypes.oneOfType([PropTypes.array,PropTypes.object]).isRequired,
+  onSelect: PropTypes.func.isRequired,
 }
 
 export default MyCalendar

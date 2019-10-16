@@ -1,6 +1,6 @@
 {
   "name": "squ4dron",
-  "description": "A project team tool.",
+  "description": "A team projects tool.",
   "license": "MIT",
   "scripts": {
     "develop": "gatsby develop",
@@ -13,21 +13,21 @@
   "dependencies": {
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.4.4",
     "@babel/plugin-proposal-optional-chaining": "^7.6.0",
-    "core-js": "^2.6.5",
-    "date-fns": "^1.30.1",
-    "firebase": "^5.9.1",
-    "gatsby": "^2.3.4",
-    "gatsby-plugin-manifest": "^2.0.24",
-    "gatsby-plugin-nprogress": "^2.0.10",
-    "gatsby-plugin-offline": "^2.0.25",
+    "core-js": "^3.3.2",
+    "date-fns": "^2.5.0",
+    "firebase": "^7.2.0",
+    "gatsby": "^2.16.3",
+    "gatsby-plugin-manifest": "^2.2.23",
+    "gatsby-plugin-nprogress": "^2.1.12",
+    "gatsby-plugin-offline": "^3.0.16",
     "grommet": "^2.7.9",
-    "grommet-icons": "^3.2.1",
-    "polished": "^2.3.3",
+    "grommet-icons": "^4.3.0",
+    "polished": "^3.4.1",
     "prop-types": "^15.7.2",
     "re-base": "^4.0.0",
-    "react": "^16.8.5",
-    "react-dom": "^16.8.5",
-    "styled-components": "^4.2.0"
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
+    "styled-components": "^4.4.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",

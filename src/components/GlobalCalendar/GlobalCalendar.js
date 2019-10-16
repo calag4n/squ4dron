@@ -1,5 +1,18 @@
 import React from 'react'
-import dateFns from 'date-fns'
+import {
+  subMonths,
+  addMonths,
+  isEqual,
+  format,
+  startOfWeek,
+  addDays,
+  startOfMonth,
+  endOfMonth,
+  endOfWeek,
+  isSameMonth,
+  isSameDay,
+  parse,
+} from 'date-fns'
 import './GlobalCalendar.css'
 import { Fireball } from 'grommet-icons'
 import base from '../../../base'
@@ -33,13 +46,13 @@ class Calendar extends React.Component {
 
   prevMonth = () => {
     this.setState(prevState => ({
-      currentMonth: dateFns.subMonths(prevState, 1),
+      currentMonth: subMonths(prevState, 1),
     }))
   }
 
   nextMonth = () => {
     this.setState(prevState => ({
-      currentMonth: dateFns.addMonths(prevState, 1),
+      currentMonth: addMonths(prevState, 1),
     }))
   }
 
@@ -51,7 +64,7 @@ class Calendar extends React.Component {
     for (const user in box) {
       if (box[user].dates) {
         box[user].dates.forEach(date => {
-          if (dateFns.isEqual(day, date)) {
+          if (isEqual(day, date)) {
             whoIsThere.push({ color: box[user].color, name: [user] })
           }
         })
@@ -82,7 +95,7 @@ class Calendar extends React.Component {
           </div>
         </div>
         <div className='col col-center'>
-          <span>{dateFns.format(this.state.currentMonth, dateFormat)}</span>
+          <span>{format(this.state.currentMonth, dateFormat)}</span>
         </div>
         <div className='col col-end' onClick={this.nextMonth}>
           <div className='icon'>chevron_right</div>
@@ -94,11 +107,11 @@ class Calendar extends React.Component {
   renderDays() {
     const dateFormat = 'dddd'
     const days = []
-    const startDate = dateFns.startOfWeek(this.state.currentMonth)
+    const startDate = startOfWeek(this.state.currentMonth)
     for (let i = 1; i < 8; i++) {
       days.push(
         <div className='col col-center' key={i}>
-          {dateFns.format(dateFns.addDays(startDate, i), dateFormat)}
+          {format(addDays(startDate, i), dateFormat)}
         </div>,
       )
     }
@@ -107,10 +120,10 @@ class Calendar extends React.Component {
 
   renderCells() {
     const { currentMonth, selectedDate, options } = this.state
-    const monthStart = dateFns.startOfMonth(currentMonth)
-    const monthEnd = dateFns.endOfMonth(monthStart)
-    const startDate = dateFns.startOfWeek(monthStart, options)
-    const endDate = dateFns.endOfWeek(monthEnd, options)
+    const monthStart = startOfMonth(currentMonth)
+    const monthEnd = endOfMonth(monthStart)
+    const startDate = startOfWeek(monthStart, options)
+    const endDate = endOfWeek(monthEnd, options)
 
     const dateFormat = 'D'
     const rows = []
@@ -119,29 +132,29 @@ class Calendar extends React.Component {
     let formattedDate = ''
     while (day <= endDate) {
       for (let i = 0; i < 7; i++) {
-        formattedDate = dateFns.format(day, dateFormat)
+        formattedDate = format(day, dateFormat)
         const cloneDay = day
 
         let addClass = ''
 
-          if (!dateFns.isSameMonth(day, monthStart)) {
-            addClass =  'disabled'
-          } else if (dateFns.isSameDay(day, selectedDate)) {
-            addClass =  'selected'
-          } 
-          
+        if (!isSameMonth(day, monthStart)) {
+          addClass = 'disabled'
+        } else if (isSameDay(day, selectedDate)) {
+          addClass = 'selected'
+        }
+
         days.push(
           <div
             className={`col cell ${addClass}`}
             key={day}
-            onClick={() => this.onDateClick(dateFns.parse(cloneDay))}
+            onClick={() => this.onDateClick(parse(cloneDay))}
           >
             {this.badgeThatDay(day)}
             <span className='number'>{formattedDate}</span>
             <span className='bg'>{formattedDate}</span>
           </div>,
         )
-        day = dateFns.addDays(day, 1)
+        day = addDays(day, 1)
       }
       rows.push(
         <div className='row' key={day}>

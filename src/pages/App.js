@@ -12,8 +12,7 @@ import {
 } from 'grommet'
 import { FormClose, Sign } from 'grommet-icons'
 import { grommet } from 'grommet/themes'
-import {format, toDate, parse} from 'date-fns'
-
+import { format, toDate, parse } from 'date-fns'
 
 import base from '../../base'
 import Sidebar from '../components/Layout/Sidebar'
@@ -38,31 +37,28 @@ class App extends Component {
   componentDidMount() {
     const { pseudo } = this.state
 
-    const box = base.fetch('/users/', { context: this }).then(res => {
+    base.fetch('/users/', { context: this }).then(res => {
       if (res[pseudo].dates) {
-        this.setState({ boxDates: res[pseudo].dates })
-        this.setState({ dates: res[pseudo].dates })
+        const dates = [...res[pseudo].dates]
+        this.setState({ dates, boxDates: res[pseudo].dates })
       }
+      this.setState({ box: res })
     })
-     this.setState({ box })
   }
 
-  onSelect = async addDate => {
-    console.log(parse(addDate))
+  onSelect = addDate => {
     const { dates } = this.state
-    const boxDates = [...dates]
-    const newDate = addDate.slice(10,0)
+    const newDate = addDate.slice(0, 10)
     const isIndex = dates.indexOf(newDate)
 
+    
     if (isIndex !== -1) {
       dates.splice(isIndex, 1)
     } else {
       dates.push(newDate)
     }
-
-    await this.setState({ dates })
-    await this.setState({ boxDates })
-
+    this.setState({ dates, boxDates: dates})    
+    
     this.updateDates()
   }
 
@@ -100,17 +96,16 @@ class App extends Component {
     }
   }
 
-  async updateDates() {
-    if (this.state.boxDates !== undefined) {
-      await base.post(`users/${this.state.pseudo}/dates`, {
-        data: this.state.boxDates,
+   updateDates() {
+    if (this.state.dates !== undefined) {
+       base.post(`users/${this.state.pseudo}/dates`, {
+        data: this.state.dates,
       })
     }
   }
 
   render() {
     const { showSidebar } = this.state
-    console.log(this.state)
     return (
       <Grommet theme={grommet} full>
         <ResponsiveContext.Consumer>
