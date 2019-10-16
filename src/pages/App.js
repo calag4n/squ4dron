@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { navigate } from 'gatsby'
-import base from '../../base'
+import PropTypes from 'prop-types'
 import {
   Box,
   Button,
@@ -8,17 +8,19 @@ import {
   Grommet,
   Heading,
   Layer,
-  ResponsiveContext
+  ResponsiveContext,
 } from 'grommet'
 import { FormClose, Sign } from 'grommet-icons'
 import { grommet } from 'grommet/themes'
-import Sidebar from '../components/Sidebar'
-import MyCalendar from '../components/MyCalendar'
-import Chat from '../components/Chat'
-import GlobalCalendar from '../components/GlobalCalendar'
-import AppBar from '../components/AppBar'
-import TodoList from '../components/TodoList'
-import PropTypes from 'prop-types'
+import { format, toDate, parse } from 'date-fns'
+
+import base from '../../base'
+import Sidebar from '../components/Layout/Sidebar'
+import MyCalendar from '../components/MyCalendar/MyCalendar'
+import Chat from '../components/Chat/Chat'
+import GlobalCalendar from '../components/GlobalCalendar/GlobalCalendar'
+import AppBar from '../components/Layout/AppBar'
+import TodoList from '../components/TodoList/TodoList'
 
 if (typeof document !== 'undefined') document.body.style.margin = 0
 
@@ -28,49 +30,35 @@ class App extends Component {
     dates: [],
     boxDates: [],
     box: {},
-    pseudo: '',
-    section: 'MyCalendar'
+    pseudo: this.props.location.state.pseudo,
+    section: 'MyCalendar',
   }
 
-  async componentDidMount() {
-    await this.setState({ pseudo: this.props.location.state.pseudo })
-    const pseudo = await this.state.pseudo
+  componentDidMount() {
+    const { pseudo } = this.state
 
-    const box = await base.fetch('/users/', { context: this })
-
-    if (box[pseudo].dates) {
-      await this.setState({ boxDates: box[pseudo].dates })
-      await this.setState({ dates: box[pseudo].dates })
-    }
-
-    await this.setState({ box })
+    base.fetch('/users/', { context: this }).then(res => {
+      if (res[pseudo].dates) {
+        const dates = [...res[pseudo].dates]
+        this.setState({ dates, boxDates: res[pseudo].dates })
+      }
+      this.setState({ box: res })
+    })
   }
 
-  async updateDates() {
-    if (this.state.boxDates !== undefined) {
-      await base.post(`${this.state.pseudo}/dates`, {
-        data: this.state.boxDates
-      })
-    }
-  }
-
-  onSelect = async addDate => {
+  onSelect = addDate => {
     const { dates } = this.state
-    let boxDates
     const newDate = addDate.slice(0, 10)
-    let isIndex = dates.indexOf(newDate)
+    const isIndex = dates.indexOf(newDate)
 
+    
     if (isIndex !== -1) {
       dates.splice(isIndex, 1)
     } else {
       dates.push(newDate)
     }
-
-    boxDates = [...dates]
-
-    await this.setState({ dates })
-    await this.setState({ boxDates })
-
+    this.setState({ dates, boxDates: dates})    
+    
     this.updateDates()
   }
 
@@ -108,9 +96,16 @@ class App extends Component {
     }
   }
 
+   updateDates() {
+    if (this.state.dates !== undefined) {
+       base.post(`users/${this.state.pseudo}/dates`, {
+        data: this.state.dates,
+      })
+    }
+  }
+
   render() {
     const { showSidebar } = this.state
-
     return (
       <Grommet theme={grommet} full>
         <ResponsiveContext.Consumer>
@@ -118,7 +113,7 @@ class App extends Component {
             <Box fill>
               <AppBar>
                 <Heading level='3' margin='none'>
-                  Entre Couilles 2019
+                  Squ4dron
                 </Heading>
                 <Button
                   icon={<Sign color='white' />}
@@ -185,9 +180,9 @@ class App extends Component {
 App.propTypes = {
   location: PropTypes.shape({
     state: PropTypes.shape({
-      pseudo: PropTypes.string.isRequired
-    }).isRequired
-  }).isRequired
+      pseudo: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
 }
 
 export default App

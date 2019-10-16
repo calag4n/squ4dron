@@ -3,7 +3,7 @@ import './Chat.css'
 import ChatForm from './ChatForm'
 import Message from './Message'
 import PropTypes from 'prop-types'
-import base from '../../base'
+import base from '../../../base'
 import { Box } from 'grommet'
 
 class Chat extends Component {

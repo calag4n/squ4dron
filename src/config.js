@@ -1,4 +1,4 @@
-export default {
+module.exports =  {
   apiKey: "AIzaSyDIr2ztE9qOQeAtjldnDB6pEhJRG3CMUpQ",
   authDomain: "antre-cool.firebaseapp.com",
   databaseURL: "https://antre-cool.firebaseio.com",

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import base from '../../base'
+import base from '../../../base'
 import { Box, Form, FormField, Button } from 'grommet'
 
 class TodoList extends Component {
